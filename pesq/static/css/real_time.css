@@ -1,0 +1,440 @@
+
+.box{
+  border-radius: 0.25em;
+  box-shadow: 1px 1px 6px rgba(50,50,50,0.2);
+  margin: 0 auto;
+  display: table;
+  width: 65vw;
+  padding: 1em 2em;
+  text-align: center;
+}
+
+.box-title{
+  font-size: 1.25em;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  font-weight: lighter;
+  color: #2f5f85;
+  position: relative;
+}
+
+.title-text{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20vw;
+}
+
+.title-x{
+  width: 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expand-box{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.box-content{
+  overflow: hidden;
+  max-height: 0px;
+  transition: max-height 0.4s ease-in;
+}
+
+.box-description{
+    box-shadow: 1px 1px 5px rgba(50, 50 ,50, 0.2);
+    border-radius: 0.25em;
+    font-weight:lighter;
+    text-align: justify;
+    margin: 1em;
+    padding: 1em;
+    color: #2f5f85;
+}
+
+.box-heading-wrapper{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 1em;
+  margin: 1em;
+  justify-items: stretch;
+}
+
+.box-heading-item{
+  align-items: center;
+  border-radius: 0.25em;
+  font-weight:lighter;
+  background: linear-gradient(45deg, rgba(28, 181, 224, 0.1) 0%, rgba(85, 172, 238, 0.5) 100%);
+  box-shadow: 1px 1px 5px rgba(50, 50 ,50, 0.2);
+  color: #55acee;
+  text-align: center;
+  width: 100%;
+  padding: 1em 0em;
+}
+
+.box-heading-item-white{
+  float: left;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  grid-gap: 1em;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-heading-item-white a, .box-heading-item-white .switch{
+  box-shadow: none;
+}
+
+.box-heading-item-white .switch:hover{
+  box-shadow: 1px 1px 5px rgba(50,50,50,0.2);
+}
+
+.box-heading-subitem{
+  border-radius: 50%;
+  box-shadow: 2px 2px 6px rgba(50, 50 ,50, 0.2);
+  width: 2vw;
+  height: 2vw;
+  padding: 0.5em;
+  background-size:80%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-blend-mode: color-dodge;
+  border: 1px solid white;
+}
+
+.box-heading-subitem:hover{
+  box-shadow: 0px 1px 3px rgba(50, 50 ,50, 0.2);
+}
+
+.box-heading-subitem:active{
+  box-shadow: 1px 1px 3px rgba(50, 50 ,50, 0.2);
+  border: 1px solid rgba(85, 172, 238, 0.5);
+}
+
+.box-title:hover{
+  color: #55acee;
+}
+
+.box-arrow{
+  float:  right;
+  width: 1em;
+}
+
+.add-btn{
+    font-family: "Arsenal", sans-serif;
+    font-weight: lighter;
+    margin: 0 auto;
+    font-size: 1.1em;
+    background: rgba(255,255,255,0.0);
+    color: #55acee;
+    display: block;
+    width: 70vw;
+    height: 3em;
+    border-radius: 2em;
+    box-shadow: none;
+    border-color: #55acee;
+}
+
+.add-btn:hover {
+    color: #565656;
+    background: linear-gradient(45deg, rgba(28, 181, 224, 0.3) 0%, rgba(85, 172, 238, 0.7) 100%);
+}
+
+
+/*
+CANETA de EDICAO
+*/
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 2vw;
+  height: 2vw;
+  padding: 0.5em;
+  box-shadow: 2px 2px 6px rgba(50, 50 ,50, 0.2);
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background-size:135%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url('/static/img/pencil.png');
+  -webkit-transition: .1s;
+  transition: .1s;
+  overflow: hidden;
+}
+
+input:checked + .slider {
+  background-color: #55acee;
+  background-image: url('/static/img/pencil-on.png');
+}
+
+.sliderLive {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background-size:135%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url('/static/img/live-off.png');
+  -webkit-transition: .1s;
+  transition: .1s;
+  overflow: hidden;
+}
+
+input:checked + .sliderLive {
+  background-color: #55acee;
+  background-image: url('/static/img/live-on.png');
+}
+
+input:checked + .switch {
+  box-shadow: 1px 1px 3px rgba(50, 50 ,50, 0.2);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #55acee;
+}
+
+.slider.round{
+  border-radius: 50%;
+}
+
+.slider.round::before{
+  border-radius: 50%;
+}
+
+
+/*
+*/
+
+.delete-exp{
+  float: left;
+  border: none;
+  color:#f9aa8b;
+  background: none;
+  display: none;
+  position: absolute;
+  left: 0;
+  padding-left: 1em;
+}
+
+.delete-exp:hover{
+  color:#f9743e;
+}
+
+
+.delete-exp:active{
+  color:#ff5555;
+}
+
+/*
+*/
+textarea{
+  font-family: "Arsenal", sans-serif;
+  font-weight: lighter;
+  color: #55acee;
+  width: 100%;
+  resize: vertical;
+  border: 1px solid rgba(80, 181, 224, 0.3) ;
+  border-radius: 0.25em;
+  padding-top: 0.4em;
+}
+
+input[type="text"]{
+  text-align: center;
+  font-family: "Arsenal", sans-serif;
+  font-weight: lighter;
+  font-size: 0.85em;
+  color: #55acee;
+  resize: vertical;
+  border: 1px solid rgba(80, 181, 224, 0.3) ;
+  border-radius: 0.25em;
+}
+
+/*
+Dashboard Main
+
+*/
+
+.dashbox {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 10px;
+  background: white;
+  padding: 10px;
+  border-radius: 0.25em;
+  justify-content: center;
+  align-content: center;
+  width: 70vw;
+  margin: 0 auto;
+}
+
+.dashbox > div{
+  align-items: center;
+  box-shadow: 0px 2px 6px rgba(150,180,180, 0.5);
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 0.25em;
+  padding: 1em;
+  text-align: center;
+  background: -webkit-linear-gradient(15deg,#20425D, #76BCF1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bolder;
+}
+
+.dashbox-datetime{
+   grid-column: 3 / 5;
+}
+
+.dashbox-title{
+  padding: 0.25em;
+  border-radius: 0.25em;
+  font-size: 1.25em;
+}
+
+.dashbox-total{
+}
+
+.dashbox-info{
+  font-family: 'Josefin Slab', serif;
+  font-size: 2.5em;
+  height: 100%;
+}
+
+.dashbox-graphic-1{
+  grid-column: 1 / 5;
+
+}
+
+.dashbox-graphic-2{
+  grid-column: 2 / 5;
+  grid-row: 4 / span 3;
+}
+
+.shade-1{
+   background: linear-gradient(45deg,#20425D, #76BCF1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bolder;
+}
+
+.shade-2{
+  background: -webkit-linear-gradient(15deg,#20425D, #76BCF1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bolder;
+}
+
+.dashbox-inctive-datetime{
+  grid-column: 3 / 5;
+}
+
+/*
+Story line of the elements
+*/
+
+.line-wrapper{
+  position: fixed;
+  right: 0;
+  margin-right: 1em;
+}
+
+.line-path{
+  position: absolute;
+  right: 8.75em;
+  width: 0.5em;
+  height: 100%;
+  background: #55acee;
+}
+
+.line{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+  flex-direction: row-reverse;
+}
+
+.line:last-child{
+  margin-bottom: 0;
+}
+
+.line-dot{
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  box-shadow: 0px 2px 5px rgba(50,50,50, 0.3);
+  background: #55acee;
+  z-index: 2;
+  position: absolute;
+  right: 8em;
+}
+
+.line:last-child .line-dot{
+  bottom: 0px;
+}
+
+.line:nth-child(2) .line-dot{
+  top: 0px;
+}
+
+.line-dot-center{
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+  background: white;
+  z-index: 3;
+  margin : 0 auto;
+  position: relative;
+  top: 0.5em;
+}
+
+.line-title{
+ width: 8em;
+ text-align: center;
+}
+
+tspan{
+  font-family: "Arsenal", sans-serif;
+  font-weight: lighter;
+}
+
+/*
+MAPA
+*/
+
+#mapid {
+  height: 30vw;
+  -webkit-text-fill-color:#4E8BB9;
+}
+
+.leaflet-control-attribution, .leaflet-control{
+  font-family: "Arsenal", sans-serif;
+  font-weight: lighter;
+}
+
+.leaflet-control-zoom-in, .leaflet-control-zoom-out{
+  z-index: 10;
+}

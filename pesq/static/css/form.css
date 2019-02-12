@@ -1,0 +1,293 @@
+.consult{
+  padding-top: 2em;
+  padding-bottom: 4em;
+  margin: 0 auto;
+  display: table;
+}
+
+.consult label{
+  font-size: 1.125em;
+  font-weight: lighter;
+  color: #55acee;
+  display:block;
+  clear: both;
+}
+
+input[type=text], input[type=email], input[type=password],input[type=url]{
+  font-family: "Arsenal", sans-serif;
+  font-size: 1em;
+  width:70vw;
+  max-width: 70vw;
+  min-height: 30px;
+  height: 30px;
+  background: #f1f1f1;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  border: 5px;
+  outline: 0;
+  padding: 10px 10px;
+  color: #565656;
+  margin-top:5px;
+  margin-bottom: 40px;
+  display: block;
+  word-wrap: break-word;      /* IE 5.5-7 */
+  white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+  white-space: pre-wrap;      /* current browsers */
+}
+
+input[type=datetime]{
+  max-width: 10vw;
+}
+
+textarea{
+  font-family: "Arsenal", sans-serif;
+  font-size: 1em;
+  width:70vw;
+  max-width: 70vw;
+  min-height: 10em;
+  height: 30px;
+  background: #f1f1f1;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  border: 5px;
+  outline: 0;
+  padding: 10px 10px;
+  color: #565656;
+  margin-top:5px;
+  resize: vertical;
+  margin-bottom: 40px;
+  display: block;
+  word-wrap: break-word;      /* IE 5.5-7 */
+  white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+  white-space: pre-wrap;      /* current browsers */
+}
+
+input[type='submit']{
+  box-shadow: none;
+}
+
+select{
+  font-family: "Arsenal", sans-serif;
+  font-weight: lighter;
+  margin: 0 auto;
+  font-size: 1.1em;
+  color: #fff;
+  display:block;
+  width: 820px;
+  height: 50px;
+
+}
+
+.consult button{
+  font-family: "Arsenal", sans-serif;
+  font-weight: lighter;
+  margin: 0 auto;
+  font-size: 1.1em;
+  background: rgba(255,255,255,0.0);
+  color: #55acee;
+  display:block;
+  width: 70vw;
+  height: 3em;
+  border-radius: 2em;
+  box-shadow: none;
+  border-color: #55acee;
+
+}
+
+.consult a{
+  text-decoration: none;
+  color: #fff;
+}
+
+.consult button:hover{
+  color: #565656;
+  background: linear-gradient(45deg, rgba(28, 181, 224, 0.3) 0%, rgba(85, 172, 238, 0.7) 100%);
+}
+
+.consult button:active{
+  color: #333;
+}
+
+
+#username{
+  clear: both;
+  max-width: 30vw;
+  position: relative;
+  float: left;
+  margin-right: 1em;
+}
+
+#username input{
+  max-width: 30vw;
+}
+
+#pwd{
+  float: right;
+  margin: 0;
+  width: 30vw;
+}
+
+#pwd input{
+  max-width: 30vw;
+}
+
+
+#nome{
+  clear: both;
+  max-width: 40vw;
+  position: relative;
+  float: left;
+  margin-right: 1em;
+}
+
+#nome input{
+  max-width: 38vw;
+}
+
+#foto{
+  float: right;
+}
+
+#foto label{
+  margin-left: 3em;
+}
+
+#graduacao{
+  clear: both;
+  max-width: 40vw;
+  position: relative;
+  float: left;
+  margin-right: 1em;
+}
+
+#graduacao input{
+  max-width: 38vw;
+}
+
+#titulo{
+  float: right;
+  margin: 0;
+  width: 27vw;
+}
+
+#titulo label{
+  text-align: center;
+
+}
+
+/*
+Janela Pop-Up de confirmação da submissão
+*/
+
+
+/* The Modal (background) */
+
+
+/* Modal Content */
+#submitConf {
+  display: none;
+  background-color: rgba(157,210,210,0.5);
+  margin: auto;
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
+  width: 800px;
+  color:#3e5454;
+  text-align: center;
+  font-size: 1.125em;
+  margin-top: 5px;
+}
+
+#submitError {
+  display: none;
+  background-color: rgba(214,93,62,0.5);
+  margin: auto;
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
+  width: 800px;
+  color:#63463F;
+  text-align: center;
+  font-size: 1.125em;
+  margin-top: 5px;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-top:8px;
+}
+
+.close:hover,
+.close:focus {
+  color: #2F5F85;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#id_pesquisas, #id_titulo{
+  list-style: none;
+}
+
+#id_pesquisas label, #id_titulo label{
+  font-weight: lighter;
+  color: #565656;
+  font-size: 0.9em;
+}
+
+#id_titulo li {
+  float: left;
+  margin-bottom: 1em;
+  margin-left: 1em;
+}
+
+#linhas{
+  margin-bottom: 3em;
+}
+
+
+input[type='file']{
+  margin-top: 1em;
+  font-family: "Arsenal", sans-serif;
+  font-weight: lighter;
+  font-size: 0.8125em;
+}
+
+input[type='file'] button{
+  font-family: "Arsenal", sans-serif;
+  font-weight: lighter;
+  border-radius: 5px;
+  background-color: #55acee;
+}
+
+
+/*
+ CURRICULUM
+*/
+
+
+#id_data_inicio, #id_data_fim {
+  max-width: 8em;
+  float: left;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.datetimeshortcuts a{
+  color: #565656;
+}
+
+li{
+  list-style-type: none;
+
+}
+
+li label{
+  font-size: 0.9em;
+  color: #565656;
+}
+
+/*
+    DASHBOARD INSERTs
+*/

@@ -1,0 +1,37 @@
+{% extends 'pesq/base.html' %}
+
+{% block content %}
+
+{% if datagroup.exists %}
+
+<div class="chart-grid">
+{% for key in datagroup %}
+
+<a href="/dashboard_chart_detail/{{ key.experimento }}" ><div class="dash-chart" id="{{ key.experimento }}" data-url="{% url 'chart_data' experimento=key.experimento altura=400%}"></div></a>
+
+<script>
+  $.ajax({
+    url: $("#{{ key.experimento }}").attr("data-url"),
+    dataType: 'json',
+    success: function (data) {
+      Highcharts.chart("{{ key.experimento }}", data);
+    }
+  });
+</script>
+
+{% endfor %}
+</div>
+
+
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+{% else %}
+
+<h3 id="no-data">Não há dados</h3>
+<h4 id="no-data-comment">Contacte o administrador para fazer uso da API</h4>
+
+{%endif%}
+
+
+{% endblock %}

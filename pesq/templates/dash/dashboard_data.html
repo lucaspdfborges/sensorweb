@@ -1,0 +1,548 @@
+{% extends 'pesq/base.html' %}
+{% load static %}
+{% load event_tags %}
+
+{% block js %}
+<script src="{% static 'js/date-picker.js' %}"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/dados.css' %}">
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+<h1>Tabela de dados</h1>
+
+{% csrf_token %}
+
+<br>
+<div class="great-container-2">
+
+  <div class="grid-item2">
+    <button id="searchBtn" class="searchBtn" type="button" name="button">Busca Refinada</button>
+  </div>
+
+  <div class="grid-item2">
+    <button id="searchBtnAll" class="searchBtn" type="button" name="button">Todos os dados</button>
+  </div>
+
+  <div class="grid-item2">
+    <button id="downloadBtnImg" class="searchBtn" type="button" name="button">Download do dados&nbsp;<span class="fa fa-download"></span></button>
+  </div>
+
+  <div class="grid-container-3">
+
+    <label class="switch">
+      <input type="checkbox" id="selectInitial" name="selectInitial" value="" class="selectCondition" checked>
+      <span class="slider round"></span>
+    </label>
+
+    <div id="initialDateLabel" class="grid-item2">Data e hora inicial</div>
+
+    <div class="grid-item2">
+      <input id="initialDate" type="date" name="" value="">
+    </div>
+    <div class="grid-item2">
+      <input id="initialTime" type="time" name="" value="00:00:00" step="1">
+    </div>
+
+  </div>
+
+  <div class="grid-container2">
+
+    <label class="switch">
+      <input type="checkbox" id="selectMin" name="selectMin" value="" class="selectCondition" checked>
+      <span class="slider round"></span>
+    </label>
+
+    <div id="minLabel" class="grid-item2">Mínimo</div>
+
+    <div class="grid-item2">
+      <input id="minValue" type="number" name="" value="0">
+    </div>
+  </div>
+
+  <div class="grid-container-3">
+
+    <label class="switch">
+      <input type="checkbox" id="selectFinal" name="selectFinal" value="" class="selectCondition" checked>
+      <span class="slider round"></span>
+    </label>
+
+    <div id="finalDateLabel" class="grid-item2">Data e hora final</div>
+    <div class="grid-item2">
+      <input id="finalDate" type="date" name="" value="">
+    </div>
+    <div class="grid-item2">
+      <input id="finalTime" type="time" name="" value="00:00:00" step="1">
+    </div>
+
+  </div>
+
+  <div class="grid-container2">
+
+    <label class="switch">
+      <input type="checkbox" id="selectMax" name="selectMax" value="" class="selectCondition" checked>
+      <span class="slider round"></span>
+    </label>
+
+    <div id="maxLabel" class="grid-item2">Máximo</div>
+
+    <div class="grid-item2">
+      <input id="maxValue" type="number" name="" value="0">
+    </div>
+  </div>
+
+</div>
+
+
+<div class="great-flex-container">
+
+  {% for exp in experimentos %}
+  <div class="flex-container ">
+    <div class="divExps">
+      <label class="switchExp">
+        <input class="chkPlot" type="checkbox" name="item" value="{{ exp.name }}"/>
+        <span class="sliderExp roundExp"></span>
+      </label>
+      {{ exp.name }}
+    </div>
+    </div>
+  {% endfor %}
+
+</div>
+
+<br>
+
+<table class="{{experimento}}" id="consult">
+
+  <tr id="title">
+    <th class="data"> Data e hora</th>
+    <th class="sensor"> Sensor </th>
+    <th class="dado"> Valor </th>
+    <th class="delete">
+      <div id="divDelete">
+      <button id="delete" class="fa fa-trash"></button>
+      <label id="selectAll" class="switchDelete">
+        <input id="selectAllconsult" class="" type="checkbox" name="item" value=""/>
+        <span class="sliderDelete roundDelete"></span>
+      </label>
+      </div>
+    </th>
+    <th class="last"> Editar </th>
+  </tr>
+
+  <tr class="itemModel">
+    <td class="data">  {{exp.data}} </td>
+    <td class="dado">  {{exp.dado}} </td>
+    <td class="sensor">  {{exp.experimento.name}} </td>
+    <td class="delete" >
+      <label class="switchDelete">
+        <input class="chkDelete" type="checkbox" name="item" value="{{exp.pk}}"/>
+        <span class="sliderDelete roundDelete"></span>
+      </label>
+    </td>
+
+    <td class="last">
+      <label class="switch">
+        <input type="checkbox" name="update" value="{{exp.pk}}" class="update">
+        <span class="slider round"></span>
+      </label>
+    </td>
+
+  </tr>
+
+  {% for exp in dataExp %}
+  <tr class="item">
+    <td class="data">  {{exp.data}} </td>
+    <td class="sensor">  {{exp.experimento.name}} </td>
+    <td class="dado">  {{exp.dado}} </td>
+    <td class="delete" >
+      <label class="switchDelete">
+        <input class="chkDelete" type="checkbox" name="item" value="{{exp.pk}}"/>
+        <span class="sliderDelete roundDelete"></span>
+      </label>
+    </td>
+
+    <td class="last">
+      <label class="switch">
+        <input type="checkbox" name="update" value="{{exp.pk}}" class="update">
+        <span class="slider round"></span>
+      </label>
+    </td>
+
+  </tr>
+  {% endfor %}
+
+</table>
+
+<script>
+
+  $(function () {
+    $.ajaxSetup({
+      headers: { "X-CSRFToken": getCookie("csrftoken") }
+    });
+  });
+
+  function getCookie(c_name)
+  {
+    if (document.cookie.length > 0)
+    {
+      c_start = document.cookie.indexOf(c_name + "=");
+      if (c_start != -1)
+      {
+        c_start = c_start + c_name.length + 1;
+        c_end = document.cookie.indexOf(";", c_start);
+        if (c_end == -1) c_end = document.cookie.length;
+        return unescape(document.cookie.substring(c_start,c_end));
+      }
+    }
+    return "";
+  }
+
+  $("#selectMin").change(function(){
+    if(!$(this).prop('checked')){
+      $("#minLabel").css("color","#aaa");
+      $("#minValue").css("visibility", "hidden");
+    }else{
+      $("#minLabel").css("color","#000");
+      $("#minValue").css("visibility", "visible");
+    }
+  });
+
+  $("#selectMax").change(function(){
+    if(!$(this).prop('checked')){
+      $("#maxLabel").css("color","#aaa");
+      $("#maxValue").css("visibility", "hidden");
+    }else{
+      $("#maxLabel").css("color","#000");
+      $("#maxValue").css("visibility", "visible");
+    }
+
+  });
+
+  $("#selectInitial").change(function(){
+    if(!$(this).prop('checked')){
+      $("#initialDateLabel").css("color","#aaa");
+      $("#initialDate").css("visibility", "hidden");
+      $("#initialTime").css("visibility", "hidden");
+    }else{
+      $("#initialDateLabel").css("color","#000");
+      $("#initialDate").css("visibility", "visible");
+      $("#initialTime").css("visibility", "visible");
+    }
+  });
+
+  $("#selectFinal").change(function(){
+    if(!$(this).prop('checked')){
+      $("#finalDateLabel").css("color","#aaa");
+      $("#finalDate").css("visibility", "hidden");
+      $("#finalTime").css("visibility", "hidden");
+    }else{
+      $("#finalDateLabel").css("color","#000");
+      $("#finalDate").css("visibility", "visible");
+      $("#finalTime").css("visibility", "visible");
+    }
+  });
+
+  $("#downloadBtn").click(function(){
+
+    var expID = $(document).find("table").first().attr('class');
+
+    var minValue = $("#minValue").val();
+    var maxValue = $("#maxValue").val();
+
+    var initialDate = $("#initialDate").val();
+    var initialTime = $("#initialTime").val();
+    var finalDate = $("#finalDate").val();
+    var finalTime = $("#finalTime").val();
+
+    var valueList = []
+    var dateList = []
+
+    $("#consult").find("tr.item").each(function(){
+      var value = $(this).find("td.dado").text();
+      var datetime =  $(this).find("td.data").text();
+      valueList.push(value);
+      dateList.push(datetime);
+    });
+
+    window.location = "/dashdata-download/"
+    + "?experimento="+expID
+    + "&initialDate="+initialDate+"T"+initialTime
+    + "&finalDate="+finalDate+"T"+finalTime
+    + "&minValue=" + minValue
+    + "&maxValue=" + maxValue
+    + "&valueList[]=" + valueList
+    + "&dateList[]=" + dateList;
+  });
+
+  function addOneField(dataValue, dadoValue, pkValue){
+    var clone = $("#consult").find("tr.itemModel").last().clone(true);
+
+    clone.removeClass();
+    clone.addClass("item");
+    clone.addClass("item");
+
+    var datetimeValue = '  '
+    +dataValue.slice(8,10)
+    +'/'+dataValue.slice(5,7)
+    +'/'+dataValue.slice(0,4)
+    +'-'+dataValue.slice(11,21);
+
+    clone.find("td.data").html(datetimeValue);
+    clone.find("td.dado").html(dadoValue);
+    clone.find("input.chkDelete").val(pkValue);
+    clone.find("input.update").val(pkValue);
+    clone.css("display","table-row");
+
+    $("#consult").append(clone);
+  };
+
+  $("#searchBtnAll").click(function(){
+
+    var expID = $(document).find("table").first().attr('class');
+
+    var minValue = 'indefinido';
+    var maxValue = 'indefinido';
+    var initialDate = 'indefinido';
+    var finalDate = 'indefinido';
+
+    $("#consult").find("tr.item").each(function(){
+      $(this).remove();
+    });
+
+    $.ajax({
+      type:"GET",
+      url:"/dashdata-search/",
+      dataType: 'json',
+      data:{
+        'experimento': expID,
+        'minValue': minValue,
+        'maxValue': maxValue,
+        'initialDate': initialDate,
+        'finalDate': finalDate,
+      },
+      success: function (dataSearch) {
+        var dateList = dataSearch.dateList;
+        var valueList = dataSearch.valueList;
+        var pkList = dataSearch.pkList;
+
+        for(var i=0; i < valueList.length; i++){
+          addOneField(dateList[i], valueList[i], pkList[i]);
+        }
+      }
+    });
+
+
+  });
+
+
+  $("#searchBtn").click(function(){
+
+    var expID = $(document).find("table").first().attr('class');
+
+    if(!$('#selectMin').prop('checked')){
+      var minValue = 'indefinido';
+    } else{
+      var minValue = $("#minValue").val();
+    }
+
+    if(!$('#selectMax').prop('checked')){
+      var maxValue = 'indefinido';
+    } else{
+      var maxValue = $("#maxValue").val();
+    }
+
+    if(!$('#initialDate').prop('checked')){
+      var initialDate = 'indefinido';
+    } else{
+      var initialDate = $("#initialDate").val() + " " + $("#initialTime").val();
+    }
+
+    if(!$('#finalDate').prop('checked')){
+      var finalDate = 'indefinido';
+    } else{
+      var finalDate = $("#finalDate").val() + " " + $("#finalTime").val();
+    }
+
+    $("#consult").find("tr.item").each(function(){
+      $(this).remove();
+    });
+
+    $.ajax({
+      type:"GET",
+      url:"/dashdata-search/",
+      dataType: 'json',
+      data:{
+        'experimento': expID,
+        'minValue': minValue,
+        'maxValue': maxValue,
+        'initialDate': initialDate,
+        'finalDate': finalDate,
+      },
+      success: function (dataSearch) {
+        var dateList = dataSearch.dateList;
+        var valueList = dataSearch.valueList;
+        var pkList = dataSearch.pkList;
+
+        for(var i=0; i < valueList.length; i++){
+          addOneField(dateList[i], valueList[i], pkList[i]);
+        }
+      }
+    });
+
+
+  });
+
+
+  function chkDeletefunction(variable){
+
+    if(variable.prop('checked')){
+      variable.parents("tr.item").css({'background-color':'rgba(255, 160, 122,0.4)'});
+
+      var oldDado = variable.closest("tr.item").find("td.dado").find('input');
+      var oldDadoValue = oldDado.prop('value');
+      oldDado.replaceWith(oldDadoValue);
+
+      var oldDate = variable.closest("tr.item").find("td.data").find('input[type=date]');
+      variable.closest("tr.item").find("input.update").prop('checked', false);
+      var oldTime = variable.closest("tr.item").find("td.data").find('input[type=time]');
+      var oldDateValue = oldDate.prop('value');
+      var oldTimeValue = oldTime.prop('value');
+
+      oldDate.remove();
+      oldTime.remove();
+      variable.closest("tr.item").find("td.data").text('  '
+      +oldDateValue.slice(8,10)
+      +'/'+oldDateValue.slice(5,7)
+      +'/'+oldDateValue.slice(0,4)
+      +'-'+oldTimeValue) +' ';
+
+      var idValue = variable.val();
+      var dtValue = variable.closest("tr.item").find("td.data").text();
+
+      $.ajax({
+        type:"POST",
+        url:"/dashboard_update_data/",
+        data:{
+          'idValue': idValue,
+          'dadoValue':oldDadoValue,
+          'datetimeValue':oldDateValue+' '+oldTimeValue,
+        }
+
+      });
+
+
+    }else{
+      variable.parents("tr.item").css({'background-color':'rgb(255, 255, 255)'});
+    }
+
+  }
+
+  $(".chkDelete").change(function(){
+    chkDeletefunction($(this));
+  });
+
+
+
+  $("#selectAllconsult").change(function(){
+
+    if($(this).prop('checked')){
+
+      $(".chkDelete").each(function(){
+        $(this).prop('checked', true);
+        $(this).parents("tr.item").css({'background-color':'rgba(255, 160, 122,0.4)'});
+
+      });
+
+    } else{
+      $(".chkDelete").each(function(){
+        $(this).prop('checked', false);
+        $(this).parents("tr.item").css({'background-color':'rgb(255, 255, 255)'});
+      });
+
+    }
+
+  });
+
+  $("#delete").click(function(){
+
+    var expID = $(this).parents("table").attr('id');
+
+    var idList = [];
+
+    $("input:checkbox[name=item]:checked").each(function(){
+      idList.push($(this).val());
+      $(this).parents("tr.item").remove();
+    })
+
+    $.ajax({
+      type:"POST",
+      url:"/dashdata-delete/",
+      data:{
+        'experimento': expID,
+        'idList[]': idList,
+      },
+    });
+  });
+
+
+  $(".update").change(function(){
+
+    if($(this).prop('checked')){
+
+      $(this).closest("tr.item").find("input.chkDelete").prop('checked', false);
+      $(this).parents("tr.item").css({'background-color':'rgb(255, 255, 255)'});
+
+      var oldDado = $(this).closest("tr.item").find("td.dado");
+      var oldDadoValue = oldDado.text();
+      oldDado.replaceWith('<td class="dado"> <input type="number" value='+oldDadoValue+'></td>');
+
+      var oldDate = $(this).closest("tr.item").find("td.data");
+      var oldDateValue = oldDate.text();
+      oldDate.replaceWith('<td class="data"> <input type="date" value="'+oldDateValue.slice(8,12)+'-'+oldDateValue.slice(5,7)+'-'+oldDateValue.slice(2,4)+'"><input type="time" value='+oldDateValue.slice(13,21)+'></td>');
+
+    } else{
+
+      var oldDado = $(this).closest("tr.item").find("td.dado").find('input');
+      var oldDadoValue = oldDado.prop('value');
+      oldDado.replaceWith(oldDadoValue);
+
+      var oldDate = $(this).closest("tr.item").find("td.data").find('input[type=date]');
+      var oldTime = $(this).closest("tr.item").find("td.data").find('input[type=time]');
+      var oldDateValue = oldDate.prop('value');
+      var oldTimeValue = oldTime.prop('value');
+
+      oldDate.remove();
+      oldTime.remove();
+      $(this).closest("tr.item").find("td.data").text('  '
+      +oldDateValue.slice(8,10)
+      +'/'+oldDateValue.slice(5,7)
+      +'/'+oldDateValue.slice(0,4)
+      +'-'+oldTimeValue) +' ';
+
+      var idValue = $(this).val();
+      var dtValue = $(this).closest("tr.item").find("td.data").text();
+
+      $.ajax({
+        type:"POST",
+        url:"/dashboard_update_data/",
+        data:{
+          'idValue': idValue,
+          'dadoValue':oldDadoValue,
+          'datetimeValue':oldDateValue+' '+oldTimeValue,
+        }
+
+      });
+
+    }
+
+  });
+
+</script>
+
+
+{% endblock %}

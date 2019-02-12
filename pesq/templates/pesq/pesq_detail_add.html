@@ -1,0 +1,82 @@
+{% extends 'pesq/base.html' %}
+
+{% block content %}
+
+<div class="pesquisador">
+
+  <div class="pesq-picture">
+    <img src="{{ usuario.foto.url }}" alt="" height="300px"/>
+  </div>
+
+  <div class="name-title"> {{ usuario.nome }} <span style="color: #55acee;">{{ usuario.graduacao }}, <b>{{ pesquisador.titulo }}</b></span></div>
+
+  <input onclick="cvEdit()" type="checkbox" id="edit-curriculum" checked/>
+
+  <div class="pesq-topic">Formação acadêmica</div>
+
+    {% for cv in cvAcademica %}
+    <div class="pesq-content-item">
+    <a class="cross" href="{% url 'delete_achievement' pk=cv.pk %}"><button class="cross">x</button></a>
+    <div class="pesq-content-data"> {{cv.data_inicio.year}} - {{cv.data_fim.year}} </div>
+    <div class="pesq-content-info">{{cv.texto}}</div>
+    </div>
+    {% endfor %}
+
+  <button onclick="popitup('/curriculum-add/A/', 'add')"class="cv-add">+</button>
+
+  <div class="pesq-topic" style= "">Formação Complementar  </div>
+
+    {% for cv in cvComplementar %}
+    <div class="pesq-content-item">
+    <a class="cross" href="{% url 'delete_achievement' pk=cv.pk %}"><button class="cross">x</button></a>
+    <div class="pesq-content-data"> {{cv.data_inicio.year}} - {{cv.data_fim.year}} </div>
+    <div class="pesq-content-info">{{cv.texto}}</div>
+    </div>
+    {% endfor %}
+
+  <button onclick="popitup('/curriculum-add/B/', 'add')"class="cv-add">+</button>
+
+
+  <!-- <div class="pesq-topic">Atuação Profissional</div>-->
+
+  <div class="pesq-topic">Linhas de Pesquisa</div>
+  <div class="pesq-fields">
+    {% for field in fields %}
+    <a href="{% url 'linha_detail' pk=field.pk %}" class="fields" >{{ field }}</a>
+    {% endfor %}
+  </div>
+
+
+  <div class="pesq-topic">Publicações</div>
+
+
+    {% for cv in  cvPaper %}
+    <div class="pesq-content-item2">
+    <a class="cross" href="{% url 'delete_paper' pk=cv.pk %}"><button class="cross">x</button></a>
+    <div class="pesq-content-data"> {{cv.data_publicacao.year}} </div>
+    <div class="pesq-content-info"><a href="{{cv.link}}"> {{cv.titulo}} </a> </div>
+    <div class="pesq-content-press"> {{cv.titulo}} </div>
+    </div>
+    {% endfor %}
+
+
+
+  <button onclick="popitup('/paper-add/', 'add')" class="cv-add">+</button>
+
+
+  <div class="pesq-topic">Produtos, Inovações e Aplicações></div>
+
+    {% for cv in cvInovacao %}
+    <div class="pesq-content-item">
+    <a class="cross" href="{% url 'delete_achievement' pk=cv.pk %}"><button class="cross">x</button></a>
+    <div class="pesq-content-data"> {{cv.data_inicio.year}} - {{cv.data_fim.year}} </div>
+    <div class="pesq-content-info">{{cv.texto}}</div>
+    </div>
+    {% endfor %}
+
+  <button onclick="popitup('/curriculum-add/D/', 'add')"class="cv-add">+</button>
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,85 @@
+
+/*
+CARD DOS PESQUISADORES
+*/
+
+.Pesquisadores{
+  margin: 20px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 25px 25px;
+  justify-content: center;
+}
+
+.cardPesq{
+  height: 22em;
+  position: relative;
+  background: white;
+  margin: 0 auto;
+  border-radius: 0.5em;
+  width: 15em;
+  overflow: hidden;
+  display: table;
+  box-shadow: 1px 1px 3px rgba(0, 20, 50, 0.6);
+
+}
+
+.cardPesq:hover{
+  background: linear-gradient(215deg, rgba(28, 181, 224, 0.2) 0%, rgba(85, 172, 238, 0.8) 100%);
+  border-color: #fefefe;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.cardPesq-img{
+  background: #f1f1f1;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow:hidden;
+  border: 2px solid rgba(85, 172, 238, 0.1);
+  height: 12em;
+  width: 12em;
+  margin-top: 0.8em;
+}
+
+.cardPesq-img img{
+  display: block;
+  position: relative;
+  left: 0%;
+  bottom: 0%;
+
+}
+
+.cardPesq:hover .cardPesq-img{
+  border: 2px solid #fefefe;
+}
+
+.cardPesq-img:active{
+  border: 2px solid #565656;
+}
+
+.cardPesq-name{
+  position: absolute;
+  bottom: 1em;
+  left: 5%;
+  color: #2f5f85;
+  display: block;
+  bottom: 0;
+  margin: 0 auto;
+  border-radius: 0.25em;
+  width: 6.5em;
+  font-size: 2em;
+  margin-top: 0.5em;
+  margin-bottom: 0.35em;
+  padding: 0.1em;
+  text-align: center;
+}
+
+.span-name{
+  color: #55acee;
+  font-size: 0.66em;
+}
+
+.cardPesq:hover .span-name{
+  color: #fefefe;
+}
+.clear { clear:both; }

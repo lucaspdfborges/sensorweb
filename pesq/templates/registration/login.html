@@ -1,0 +1,23 @@
+{% extends 'pesq/base.html' %}
+
+{% block content %}
+
+<h1>Login</h1>
+
+{% if form.errors %}
+<p style='text-align: center; color: lightsalmon;'>Dados de usuário e/ou senha incorretos. Tente novamente.</p>
+{% endif %}
+
+<form class="consult"  method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+
+  <label>Usuário</label>
+  {{ form.username }}
+
+  <label>Senha</label>
+  {{ form.password }}
+
+  <button type="submit">Login</button>
+</form>
+
+{% endblock %}

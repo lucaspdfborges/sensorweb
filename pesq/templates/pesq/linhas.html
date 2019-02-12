@@ -1,0 +1,72 @@
+{% extends 'pesq/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/linhas.css' %}">
+{% endblock%}
+
+{% block content %}
+
+  <h1>Linhas de Pesquisa</h1>
+  <div class="grid-container">
+
+    <div class="grid-item card transition">
+      <h2 class="transition">Autômatos
+        <br> Celulares<br></h2>
+      <div id="cellular-automata"></div>
+    </div>
+
+    <a href="https://codepen.io/LucasPDFBorges/full/vzPQZy/" id="fracGeom" class="grid-item card transition">
+      <h2 class="transition">Geometria <br> Fractal</h2>
+      <div id="frac"></div>
+    </a>
+
+    <div id="nsat" class="grid-item card transition">
+      <h2 class="transition">Fluxo<br> Não Saturado</h2>
+      <div id="dam"></div>
+      <div id="water"></div>
+    </div>
+
+    <div class="grid-item card transition">
+      <h2 class="transition">Difusão de
+        <br> Contaminantes<br></h2>
+      <div id="fringe"></div>
+      <div id="grains"></div>
+      <div id="grains2"></div>
+      <div id="grains3"></div>
+      <div id="grains4"></div>
+      <div id="grains5"></div>
+      <div id="grains6"></div>
+      <div id="grains7"></div>
+    </div>
+
+    <div class="grid-item card transition">
+      <h2 class="transition">Aprendizagem
+        <br>de Máquina<br></h2>
+        <div id="axes"></div>
+        <div id="points"></div>
+        <div id="line"></div>
+    </div>
+
+    <div class="grid-item card transition">
+      <h2 class="transition">Estabilidade
+        <br> de Taludes<br></h2>
+      <div id="slope"></div>
+      <div id="slopeslip"></div>
+    </div>
+
+     <div class="grid-item card transition">
+      <h2 class="transition">Internet
+        <br> das Coisas<br></h2>
+       <div class="imgAnimation" id="circle0"></div>
+       <div class="imgAnimation" id="circle1"></div>
+       <div class="imgAnimation" id="circle2"></div>
+       <div class="imgAnimation" id="circle3"></div>
+       <div class="imgAnimation" id="circle4"></div>
+       <div class="imgAnimation" id="circle5"></div>
+       <div class="imgAnimation" id="circle6"></div>
+    </div>
+
+  </div>
+
+{% endblock %}

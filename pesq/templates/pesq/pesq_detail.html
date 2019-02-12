@@ -1,0 +1,75 @@
+{% extends 'pesq/base.html' %}
+
+{% block content %}
+
+<div class="pesquisador">
+
+  <div class="pesq-picture">
+    <img src="{{ usuario.foto.url }}" alt="" height="300px"/>
+  </div>
+
+  <div class="name-title"> {{ usuario.nome }} <span style="color: #55acee;">{{ usuario.graduacao }}, <b>{{ pesquisador.titulo }}</b></span></div>
+
+  <div class="pesq-topic">Formação acadêmica</div>
+  <div class="pesq-content">
+
+    {% for cv in cvAcademica %}
+    <div class="pesq-content-data"> {{cv.data_inicio.year}} - {{cv.data_fim.year}} </div>
+    <div class="pesq-content-info">{{cv.texto}}</div>
+    {% endfor %}
+
+  </div>
+
+
+  {% if cvComplementar.exists %}
+  <div class="pesq-topic">Formação Complementar</div>
+  <div class="pesq-content">
+
+    {% for cv in cvComplementar %}
+    <div class="pesq-content-data"> {{cv.data_inicio.year}} - {{cv.data_fim.year}} </div>
+    <div class="pesq-content-info">{{cv.texto}}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+
+  <!-- <div class="pesq-topic">Atuação Profissional</div>-->
+
+  <div class="pesq-topic">Linhas de Pesquisa</div>
+  <div class="pesq-fields">
+    {% for field in fields %}
+    <a href="{% url 'linha_detail' pk=field.pk %}" class="fields" >{{ field }}</a>
+    {% endfor %}
+  </div>
+
+  {% if cvPaper.exists%}
+  <div class="pesq-topic">Publicações</div>
+
+  <div class="pesq-public">
+
+    {% for cv in  cvPaper %}
+
+    <div class="pesq-content-data"> {{cv.data_publicacao.year}} </div>
+    <div class="pesq-content-info"><a href="{{cv.link}}"> {{cv.titulo}} </a> </div>
+    <div class="pesq-content-press"> {{cv.titulo}} </div>
+
+    {% endfor %}
+
+  </div>
+  {% endif %}
+
+  {% if cvInovacao.exists %}
+  <div class="pesq-topic">Produtos, Inovações e Aplicações</div>
+
+  <div class="pesq-content">
+
+    {% for cv in cvInovacao %}
+    <div class="pesq-content-data"> {{cv.data_inicio.year}} - {{cv.data_fim.year}} </div>
+    <div class="pesq-content-info">{{cv.texto}}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</div>
+
+{% endblock %}

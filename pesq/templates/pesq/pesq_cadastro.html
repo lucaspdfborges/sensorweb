@@ -1,0 +1,36 @@
+{% extends 'pesq/base.html' %}
+
+{% block content %}
+
+<form class="consult" method="POST" class="pesq-form">
+  {% csrf_token %}
+
+  <div id="nome">
+    <label>Nome: </label>
+    {{form.nome}}
+  </div>
+
+  <div id="foto">
+    <label>Foto: </label>
+    {{form.foto}}
+  </div>
+
+  <div id="graduacao">
+    <label>Título de graduação: </label>
+    {{form.graduacao}}
+  </div>
+
+  <div id="titulo">
+    <label>Título: </label>
+    {{form.titulo}}
+  </div>
+
+  <div id="linhas">
+    <label>Linhas de pesquisa: </label>
+    {{form.pesquisas}}
+  </div>
+
+  <button type="submit">Salvar</button>
+</form>
+
+{% endblock %}

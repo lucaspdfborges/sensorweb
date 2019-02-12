@@ -1,0 +1,367 @@
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic);
+
+/*html {
+  background-image: url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/arches.png);
+}
+*/
+html {
+  overflow-y: scroll;
+}
+
+html,
+body {
+  background-color: #fafeff; /* f1f5ff  fafeff*/
+  font-family: "Arsenal", sans-serif;
+  font-weight: lighter;
+}
+
+
+header{
+  margin-top: -1em;
+}
+
+.main{
+  margin: 0;
+  min-height: 50vh;
+}
+
+/*
+  < < <  TITULO > > >
+*/
+
+li {
+    list-style-type: none;
+}
+
+.maintitle {
+  background-color: #565656;
+  font-size: 60px;
+  color: transparent;
+  text-shadow: 0px 2px 3px #ccd6dd;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.divisor {
+  background-color: #565656;
+  font-size: 60px;
+  color: transparent;
+  text-shadow: 0px 2px 3px #fff;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.subtitle {
+  background-color: #2f5f85;
+  font-size: 60px;
+  color: transparent;
+  text-shadow: 0px 2px 3px #ccd6dd;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/*
+  CORPO
+*/
+
+h1{
+  font-size: 2.5em;
+  text-align: center;
+  color: #2f5f85;
+  font-weight: lighter;
+
+}
+
+h2 {
+  text-align: center;
+  margin-top: 25px;
+  position: absolute;
+  z-index: 99;
+  font-size: 32px;
+  color: #66757f;
+  width: 100%;
+}
+
+h2 hash {
+  color: #292f33;
+}
+
+h2 small {
+  font-weight: lighter;
+  font-size: 65%;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/*
+MENU
+*/
+
+.nav {
+  background-color: rgba(250,255,255,0.98);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0.5% 15px;
+  text-align: center;
+  border-width: 1px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  max-width: 100%;
+  left: 0;
+}
+
+.nav li {
+  float: left;
+}
+
+.nav li:hover a {
+  color: #2f5f85;
+}
+
+.nav a {
+  display: inline-block;
+  color: #55acee;
+  padding: 2px 2em;
+  font-size: 1.125em;
+  text-align: center;
+  font-weight: lighter;
+  text-decoration: none;
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -ms-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+.nav-container {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/*
+NAV USER
+*/
+
+.nav-user {
+  background: linear-gradient(45deg, rgba(28, 181, 224, 0.5) 0%, rgba(85, 172, 238, 0.8) 100%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  border-radius: 0.25em;
+  margin-bottom: 0.5em;
+  padding: 2em 0px;
+  text-align: center;
+  z-index: 9999;
+  max-width: 100%;
+  left: 0;
+}
+
+.nav-user li {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.nav-user li:hover a {
+  color: #2f5f85;
+}
+
+.nav-user a {
+  vertical-align: middle;
+  display: inline-block;
+  color: #fefefe;
+  padding: 2px 2em;
+  font-size: 1.125em;
+  text-align: center;
+  font-weight: lighter;
+  text-decoration: none;
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -ms-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+/*
+ NAV BAR STICKY
+*/
+
+#sticky {
+  left: 0;
+  z-index: 999;
+}
+
+#sticky-phantom {
+  visibility: hidden;
+  height: 42px;
+}
+
+#sticky.stick {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 900;
+  display: block;
+}
+
+/*
+ FOOTER
+*/
+footer {
+  clear: both;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  margin-top: 50px;
+  background: #306790;
+  color: white;
+  text-align: center;
+  z-index: 999;
+  padding: 0px 0px 3em 0px;
+  font-weight: lighter;
+  border-radius: 0.5em;
+
+}
+
+.divided {
+  padding-top: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.divider {
+  flex-grow: 1;
+  border-bottom: 1px solid white;
+  margin: 5px;
+}
+
+.generic-anchor {
+  color: #aee;
+  font-size: 1.66em;
+  padding: 25px;
+  margin-top: 50px;
+}
+
+.generic-anchor:hover {
+  color: #55acee;
+}
+
+#login{
+  color: rgba(28, 190, 224, 1);
+}
+
+#logout{
+  color: lightsalmon;
+}
+
+#username{
+  color: #2f5f85;
+  float: right;
+}
+
+#login:hover, #logout:hover{
+  color: #2f5f85;
+}
+
+ #username:hover{
+  color:rgba(28, 50, 80, 1);
+}
+
+#userimg{
+  float: right;
+  border: 1px solid white;
+  border-radius: 50%;
+  margin: 0 auto;
+  padding: 0;
+  overflow:hidden;
+  max-width: 3em;
+  max-length: 3em;
+}
+
+#user:hover  #userimg{
+  border: 1px solid #2f5f85;
+}
+
+/*
+ MENU LOGIN
+*/
+
+
+.wrapper-login-item{
+  margin-top: 2em;
+  position:fixed;
+  float: left;
+}
+
+.login-item{
+  border-radius: 50%;
+  box-shadow: 2px 2px 6px rgba(50, 50 ,50, 0.2);
+  width: 3vw;
+  height: 3vw;
+  padding: 0.5em;
+  background-size:80%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: 1px solid white;
+  margin-bottom: 0.5em;
+  background-color: white;
+}
+
+.login-item-admin{
+  border-radius: 50%;
+  box-shadow: 2px 2px 6px rgba(50, 50 ,50, 0.2);
+  width: 3vw;
+  height: 3vw;
+  padding: 0.5em;
+  background-size:140%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: 1px solid white;
+  margin-bottom: 0.5em;
+  background-color: white;
+}
+
+.login-item:hover, .login-item-admin:hover{
+  box-shadow: 1px 1px 3px rgba(50, 50 ,50, 0.2);
+}
+
+.login-item:active, .login-item-admin:active{
+  box-shadow: 1px 1px 3px rgba(50, 50 ,50, 0.2);
+  border: 1px solid rgba(85, 172, 238, 0.5);
+}
+
+.profile-item{
+  background-size:60%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: 1px solid white;
+  margin-bottom: 0.5em;
+  background-color: white;
+  float: left;
+}
+
+/*
+Janelas POP-UP
+*/
+
+.footer-top{
+  background-size:100%;
+  background-repeat:no-repeat;
+  background-position: center center;
+  background-image: url('/static/img/bg4.png');
+  height: 11em;
+  padding-bottom: 2em;
+}

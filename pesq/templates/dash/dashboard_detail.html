@@ -1,0 +1,322 @@
+{% extends 'pesq/base.html' %}
+{% load static %}
+{% load event_tags %}
+
+{% block js %}
+<script src="{% static 'js/date-picker.js' %}"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/dados.css' %}">
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+<h1>Representação gráfica dos dados</h1>
+
+{% csrf_token %}
+
+
+<br>
+<div class="great-container-2">
+
+  <div class="grid-item2">
+    <button id="searchBtn" class="searchBtn" type="button" name="button">Gráfico Refinado</button>
+  </div>
+
+  <div class="grid-item2">
+    <button id="searchBtnAll" class="searchBtn" type="button" name="button">Gráfico completo</button>
+  </div>
+
+  <div class="grid-item2">
+    <button id="downloadBtnImg" class="searchBtn" type="button" name="button">Download do dados&nbsp;<span class="fa fa-download"></span></button>
+  </div>
+
+  <div class="grid-container-3">
+
+    <label class="switch">
+      <input type="checkbox" id="selectInitial" name="selectInitial" value="" class="selectCondition" checked>
+      <span class="slider round"></span>
+    </label>
+
+    <div id="initialDateLabel" class="grid-item2">Data e hora inicial</div>
+    <div class="grid-item2">
+      <input id="initialDate" type="date" name="" value="">
+    </div>
+    <div class="grid-item2">
+      <input id="initialTime" type="time" name="" value="00:00:00" step="1">
+    </div>
+
+  </div>
+
+  <div class="grid-container2">
+
+    <label class="switch">
+      <input type="checkbox" id="selectMin" name="selectMin" value="" class="selectCondition" checked>
+      <span class="slider round"></span>
+    </label>
+
+    <div id="minLabel" class="grid-item2">Mínimo</div>
+
+    <div class="grid-item2">
+      <input id="minValue" type="number" name="" value="0">
+    </div>
+  </div>
+
+  <div class="grid-container-3">
+
+    <label class="switch">
+      <input type="checkbox" id="selectFinal" name="selectFinal" value="" class="selectCondition" checked>
+      <span class="slider round"></span>
+    </label>
+
+    <div id="finalDateLabel" class="grid-item2">Data e hora final</div>
+    <div class="grid-item2">
+      <input id="finalDate" type="date" name="" value="">
+    </div>
+    <div class="grid-item2">
+      <input id="finalTime" type="time" name="" value="00:00:00" step="1">
+  </div>
+
+  </div>
+
+  <div class="grid-container2">
+
+    <label class="switch">
+      <input type="checkbox" id="selectMax" name="selectMax" value="" class="selectCondition" checked>
+      <span class="slider round"></span>
+    </label>
+
+    <div id="maxLabel" class="grid-item2">Máximo</div>
+
+    <div class="grid-item2">
+      <input id="maxValue" type="number" name="" value="0">
+    </div>
+  </div>
+
+</div>
+
+<div class="great-flex-container">
+
+  {% for exp in experimentos %}
+  <div class="flex-container ">
+    <div class="divExps">
+      <label class="switchExp">
+        <input class="chkPlot" type="checkbox" name="item" value="{{ exp.name }}"/>
+        <span class="sliderExp roundExp"></span>
+      </label>
+      {{ exp.name }}
+    </div>
+    </div>
+  {% endfor %}
+
+</div>
+
+<br>
+<div class="chart-wrapper">
+  <div class="dash-chart-detail" id="grafico"></div>
+</div>
+
+
+<script>
+
+  $(function () {
+    $.ajaxSetup({
+      headers: { "X-CSRFToken": getCookie("csrftoken") }
+    });
+  });
+
+  function getCookie(c_name)
+  {
+    if (document.cookie.length > 0)
+    {
+      c_start = document.cookie.indexOf(c_name + "=");
+      if (c_start != -1)
+      {
+        c_start = c_start + c_name.length + 1;
+        c_end = document.cookie.indexOf(";", c_start);
+        if (c_end == -1) c_end = document.cookie.length;
+        return unescape(document.cookie.substring(c_start,c_end));
+      }
+    }
+    return "";
+  }
+
+
+  $("#selectMin").change(function(){
+    if(!$(this).prop('checked')){
+      $("#minLabel").css("color","#aaa");
+      $("#minValue").css("visibility", "hidden");
+    }else{
+      $("#minLabel").css("color","#000");
+      $("#minValue").css("visibility", "visible");
+    }
+  });
+
+  $("#selectMax").change(function(){
+    if(!$(this).prop('checked')){
+      $("#maxLabel").css("color","#aaa");
+      $("#maxValue").css("visibility", "hidden");
+    }else{
+      $("#maxLabel").css("color","#000");
+      $("#maxValue").css("visibility", "visible");
+    }
+
+  });
+
+  $("#selectInitial").change(function(){
+    if(!$(this).prop('checked')){
+      $("#initialDateLabel").css("color","#aaa");
+      $("#initialDate").css("visibility", "hidden");
+      $("#initialTime").css("visibility", "hidden");
+    }else{
+      $("#initialDateLabel").css("color","#000");
+      $("#initialDate").css("visibility", "visible");
+      $("#initialTime").css("visibility", "visible");
+    }
+  });
+
+  $("#selectFinal").change(function(){
+    if(!$(this).prop('checked')){
+      $("#finalDateLabel").css("color","#aaa");
+      $("#finalDate").css("visibility", "hidden");
+      $("#finalTime").css("visibility", "hidden");
+    }else{
+      $("#finalDateLabel").css("color","#000");
+      $("#finalDate").css("visibility", "visible");
+      $("#finalTime").css("visibility", "visible");
+    }
+  });
+
+
+  $("#downloadBtnImg").click(function(){
+
+    var expID = $(document).find(".dash-chart-detail").first().attr('id');
+
+    var minValue = $("#minValue").val();
+    var maxValue = $("#maxValue").val();
+
+    var initialDate = $("#initialDate").val();
+    var initialTime = $("#initialTime").val();
+    var finalDate = $("#finalDate").val();
+    var finalTime = $("#finalTime").val();
+
+    var valueList = []
+    var dateList = []
+
+    $("#consult").find("tr.item").each(function(){
+      var value = $(this).find("td.dado").text();
+      var datetime =  $(this).find("td.data").text();
+      valueList.push(value);
+      dateList.push(datetime);
+    });
+
+    window.location = "/dashdata-download/"
+    + "?experimento="+expID
+    + "&initialDate="+initialDate+"T"+initialTime
+    + "&finalDate="+finalDate+"T"+finalTime
+    + "&minValue=" + minValue
+    + "&maxValue=" + maxValue
+    + "&valueList[]=" + valueList
+    + "&dateList[]=" + dateList;
+
+  });
+
+
+  $("#searchBtnAll").click(function(){
+
+    var expIDlist = [];
+
+    $(".chkPlot").each(function(){
+        var expID = $(this).attr('value');
+        if($(this).prop('checked')){
+          expIDlist.push(expID);
+        }
+    });
+
+    $.ajax({
+      type:"GET",
+      url: "/dashboard_chart_plot/",
+      data:{
+        'experimento[]': expIDlist,
+
+        'minValue': 'indefinido',
+        'maxValue': 'indefinido',
+        'initialDate': 'indefinido',
+        'finalDate': 'indefinido',
+      },
+      dataType: 'json',
+      success: function (data) {
+        Highcharts.chart("grafico", data);
+      }
+    });
+
+  });
+
+  $("#searchBtn").click(function(){
+
+    var expID = $(document).find(".dash-chart-detail").first().attr('id');
+
+    if(!$('#selectMin').prop('checked')){
+      var minValue = 'indefinido';
+    } else{
+      var minValue = $("#minValue").val();
+    }
+
+    if(!$('#selectMax').prop('checked')){
+      var maxValue = 'indefinido';
+    } else{
+      var maxValue = $("#maxValue").val();
+    }
+
+    if(!$('#initialDate').prop('checked')){
+      var initialDate = 'indefinido';
+    } else{
+      var initialDate = $("#initialDate").val() + " " + $("#initialTime").val();
+    }
+
+    if(!$('#finalDate').prop('checked')){
+      var finalDate = 'indefinido';
+    } else{
+      var finalDate = $("#finalDate").val() + " " + $("#finalTime").val();
+    }
+
+    $("#consult").find("tr.item").each(function(){
+      $(this).remove();
+    });
+
+    var expIDlist = [];
+
+    $(".chkPlot").each(function(){
+        var expID = $(this).attr('value');
+        if($(this).prop('checked')){
+          expIDlist.push(expID);
+        }
+    });
+
+    $.ajax({
+      type:"GET",
+      url: "/dashboard_chart_plot/",
+      data:{
+        'experimento[]': expIDlist,
+        'minValue': minValue,
+        'maxValue': maxValue,
+        'initialDate': initialDate,
+        'finalDate': finalDate,
+      },
+      dataType: 'json',
+      success: function (data) {
+        Highcharts.chart("grafico", data);
+      }
+    });
+
+  });
+
+</script>
+
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+{% endblock %}

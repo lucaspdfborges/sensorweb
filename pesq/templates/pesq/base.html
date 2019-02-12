@@ -1,0 +1,101 @@
+{% load static %}
+<hmtl>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Arsenal" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'js/home.js' %}"></script>
+    <script src="{% static 'js/curriculum.js' %}"></script>
+    <!-- HERE WE PLACE THE JAVASCRIPT-->
+    {% block js %}
+    {% endblock %}
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pesq.css' %}">
+    <link rel="stylesheet" href="{% static 'css/details.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/curriculum.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/highcharts-custom.css' %}">
+    <!-- HERE WE PLACE THE CSS-->
+    {% block css %}
+    {% endblock %}
+  </head>
+
+  <body>
+
+    <header>
+      <br>
+      <div id="content-anchor"></div>
+      <div id="sticky-phantom"></div>
+      <div id="sticky">
+        <ul class="nav">
+          <div class="nav-container">
+            <li><a href="/">Home</a></li>
+            <li><a href="">Eventos</a></li>
+            <li><a href="/pesquisadores/">Pesquisadores</a></li>
+          </div>
+          <div class="nav-container">
+            <li><a href="/linhas-de-pesquisa/">Linhas de Pesquisa</a></li>
+            <li><a href="#">Aplicativos</a></li>
+            <li><a href="#">Orçamento</a></li>
+            {% if user.is_authenticated%}
+            <li><a href="{% url 'logout' %}" id="logout">Logout</a></li>
+            <li class="profile-item" style="background-image: url('/static/img/profile.png');"><a href="/atualizar-usuario/" title="perfil"></a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}" id="login">Login</a></li>
+            {% endif %}
+          </div>
+        </ul>
+      </div>
+    </header>
+
+    {% if user.is_authenticated%}
+
+    <ul class="wrapper-login-item">
+        <a href="/dashboard/chart_real_time/" title="dashboard"><li class="login-item" style="background-image: url('/static/img/dashboard.png');"></li></a>
+        <a href="/dashboard/inserir-dados/" title="inserir dados manualmente"><li class="login-item" style="background-image: url('/static/img/keyboard.png');"></li></a>
+        <a href="/dashboard/chart_data/" title="visualizar tabela com os dados"><li class="login-item" style="background-image: url('/static/img/table.png');"></li></a>
+        <a href="/dashboard/chart_detail/" title="visualizar representações gráficas dos dados"><li class="login-item" style="background-image: url('/static/img/graphic.png');"></li></a>
+        <a href="/create-alert/" title="criar alerta"><li class="login-item" style="background-image: url('/static/img/alert.png');"></li></a>
+        <a href="/curriculum/" title="currículo"><li class="login-item" style="background-image: url('/static/img/cv.png');"></li></a>
+          {% if user.is_superuser%}
+        <a href=""><li class="login-item-admin" style="background-image: url('/static/img/profile-add.png');"></li></a>
+        <a href=""><li class="login-item-admin" style="background-image: url('/static/img/field-add.png');"></li></a>
+        {% endif %}
+    </ul>
+    {% endif %}
+
+    <div class="main">
+      <!-- HERE WE PLACE THE CONTENT-->
+      {% block content %}
+      {% endblock %}
+    </div>
+
+    <footer>
+
+      <div class="footer-top">
+        
+      </div>
+
+      <p><b>GeoFluxo: </b>Grupo de pesquisa e inovação em geotecnia e meio ambiente da Universidade de Brasília &emsp; | &emsp; <b>Orientação: </b> André Brasil, Dr.
+
+      <p class="divided ">
+        <span class="divider"></span>
+        <span>
+          <a href="#" class="generic-anchor" target="_blank" title="Pinterest"><i class="fa fa-pinterest"></i></a>
+          <a href="#" class="generic-anchor" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a>
+          <a href="#" class="generic-anchor" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a>
+          <a href="#" class="generic-anchor" target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a>
+          <a href="#" class="generic-anchor" target="_blank" title="Youtube" ><i class="fa fa-youtube"></i></a>
+          <a href="#" class="generic-anchor" target="_blank" title="Google Plus" ><i class="fa fa-google-plus"></i></a>
+        </span>
+        <span class="divider"></span>
+      </p>
+
+    </footer>
+
+  </body>
+  </html>

@@ -1,0 +1,13 @@
+{% extends 'pesq/pop_up.html' %}
+
+{% block content %}
+
+<form class="consult" method="POST" class="pesq-form">
+  {% csrf_token %}
+
+ {{experimento_form.as_p}}
+
+  <button type="submit">Salvar</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+
+#date-field-1{
+  float: left;
+}
+
+ #date-field-2{
+   float: right;
+ }
+
+ .cv-add{
+   display: block;
+   text-align: center;
+   margin: 0 auto;
+   border-style: solid;
+   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+   color: #55acee;
+   font-size: 2em;
+   background-color: rgba(255,255,255,0);
+   min-width: 1.5em ;
+   min-height: 1.25em ;
+   border-radius: 50%;
+   padding-bottom: 0.2em;
+   margin-top: 1em;
+ }
+
+button.cv-add:hover{
+   background: linear-gradient(45deg, rgba(28, 181, 224, 0.5) 0%, rgba(85, 172, 238, 0.8) 100%);
+   color: #fff;
+ }
+
+button.cv-add:active{
+  background: linear-gradient(45deg, rgba(28, 181, 224, 0.5) 0%, rgba(85, 172, 238, 0.8) 100%);
+  background: #55acee;
+  color: #ccc;
+}

@@ -1,0 +1,441 @@
+{% extends 'pesq/base.html' %}
+{% load static %}
+{% load event_tags %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/real_time.css' %}">
+<link href="https://fonts.googleapis.com/css?family=Josefin+Slab:100" rel="stylesheet">
+<link href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" rel="stylesheet">
+{% endblock%}
+
+{% block js %}
+<script src="{% static 'js/real_time.js' %}"></script>
+<script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<h1>Dashboard</h1>
+
+<div class="dashbox">
+  <div class="shade-1">
+    <div class="dashbox-title"> Último sensor ativo </div>
+    <div id="latest-name" class="dashbox-info"></div>
+  </div>
+  <div class="shade-1">
+    <div class="dashbox-title"> Valor: </div>
+    <div id="latest-value" class="dashbox-info"></div>
+  </div>
+  <div class="dashbox-datetime shade-1">
+    <div class="dashbox-title"> Data e hora: </div>
+    <div id="latest-datetime" class="dashbox-info"> </div>
+  </div>
+  <div class="dashbox-graphic-1">
+    <div class="dashbox-title"> Grafico: valor x tempo (todos) </div>
+    <div style="clear:both;" id="allSensors"></div>
+  </div>
+  <div class="shade-2">
+    <div class="dashbox-title"> Sensor inativo por mais tempo </div>
+    <div id="inactive-name" class="dashbox-info"></div>
+  </div>
+  <div class="shade-2">
+    <div class="dashbox-title"> Valor: </div>
+    <div id="inactive-value" class="dashbox-info"> 0.00 </div>
+  </div>
+  <div class="dashbox-inctive-datetime">
+    <div class="dashbox-title"> Data e hora: </div>
+    <div id="inactive-datetime" class="dashbox-info">  </div>
+  </div>
+  <div class="dashbox-graphic-2">
+    <div class="dashbox-title"> Grafico: quantidade de dados x sensor </div>
+    <div style="clear:both;" id="dataAmount"></div>
+  </div>
+  <div class="dashbox-total">
+    <div class="dashbox-title"> Total de dados de todos os sensores </div>
+    <div id="total-amount" class="dashbox-info"></div>
+  </div>
+  <div>
+    <div class="dashbox-title"> Maior banco de dados </div>
+    <div id="biggest-db" class="dashbox-info"></div>
+  </div>
+  <div>
+    <div class="dashbox-title"> Último sensor criado </div>
+    <div id="newest" class="dashbox-info"></div>
+  </div>
+  <div class="dashbox-graphic-1">
+    <div class="dashbox-title"> Mapa dos sensores </div>
+    <div class="dashbox-info">
+      <div id="mapid"></div>
+    </div>
+  </div>
+</div>
+
+
+{% if experimentos.exists %}
+
+<h1>Detalhamento dos sensores</h1>
+
+<br>
+
+{% for exp in experimentos %}
+
+<div class="box" id="{{exp.id}}">
+  <div class="box-title">
+
+    <div class="title-x">
+      <button type="button" class="fa fa-remove delete-exp"></button>
+    </div>
+
+    <div class="title-text"> <span>{{ exp.name }}</span> </div>
+
+    <div class="box-heading-item-white">
+
+      <label title="dados em tempo real" class="switch">
+        <input id="{{exp.name}}-live" class="live" type="checkbox">
+        <span class="sliderLive round"></span>
+      </label>
+
+      <label title="editar sensor" class="switch">
+        <input class="edit-pencil" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+
+      <a title="inserir dados manualmente" href="" style="background-image: url('/static/img/keyboard.png');" class="box-heading-subitem"></a>
+      <a title="criar alerta" href="" style="background-image: url('/static/img/alert.png');" class="box-heading-subitem"></a>
+      <a title="visualizar representações gráficas" href="" style="background-image: url('/static/img/graphic.png');" class="box-heading-subitem"></a>
+
+    </div>
+
+    <div class="expand-box"> <span class="fa fa-chevron-right box-arrow"></span></div>
+
+  </div>
+
+  <div class="box-content">
+
+    <div class="box-heading-wrapper">
+
+      <div class="box-heading-item">
+        <span style="color: #2f5f85;">Criado em:</span>
+        <br>
+        {{ exp.created|formatDateTime }}
+      </div>
+
+      <div class="box-heading-item">
+        <span style="color: #2f5f85;">Visto por último em:</span>
+        <br>
+        {{ exp.last_seen|formatDateTime }}
+      </div>
+
+      <div class="box-heading-item">
+        <span style="color: #2f5f85;">  Último dado registrado:</span>
+        <br>
+        {{ exp.last_data }}
+      </div>
+
+    </div>
+
+    <div class="box-description">
+      <p>{{ exp.description }}</p>
+    </div>
+
+    {% if exp|hasData %}
+
+    <div style="clear:both;" class="dash-chart-detail" id="{{ exp.name }}"></div>
+
+    {%endif%}
+
+  </div>
+
+</div>
+
+<br>
+{% endfor %}
+
+{% else %}
+
+<h3 id="no-data">Não há dados</h3>
+<h4 id="no-data-comment">Contacte o administrador para fazer uso da API</h4>
+
+{%endif%}
+
+
+<button class="add-btn" onclick="popitup('/dashboard/insert-sensor/','adicionar sensor')" type="button" name="button">
+  Adicionar sensor
+</button>
+
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+
+    $(function () {
+      $.ajaxSetup({
+        headers: { "X-CSRFToken": getCookie("csrftoken") }
+      });
+    });
+
+    function getCookie(c_name)
+    {
+      if (document.cookie.length > 0)
+      {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1)
+        {
+          c_start = c_start + c_name.length + 1;
+          c_end = document.cookie.indexOf(";", c_start);
+          if (c_end == -1) c_end = document.cookie.length;
+          return unescape(document.cookie.substring(c_start,c_end));
+        }
+      }
+      return "";
+    }
+
+    var chartDic = {};
+
+    $('.edit-pencil').change(function(){
+
+      var deleteBtn = $(this).closest('.box').find('.delete-exp');
+      var description = $(this).closest('.box').find('.box-description');
+      var title = $(this).closest('.box').find('.title-text');
+
+      if($(this).prop('checked')){
+        deleteBtn.show();
+
+        var descriptionText = description.find('p').html();
+        var textBox ="<textarea style='white-space:pre-wrap; box-shadow: none;'>"+descriptionText+"</textarea>";
+        description.find('p').replaceWith(textBox);
+
+        var titleText = title.find('span').text();
+        var textInput = '<input type="text" value="'+titleText+'">';
+        title.find('span').replaceWith(textInput);
+
+      }else{
+        deleteBtn.hide();
+
+        var descriptionText = description.find('textarea').val();
+        descriptionText.replace("\n", "<br>");
+        var pText = '<p>'+descriptionText+'</p>';
+        description.find('textarea').replaceWith(pText);
+
+        var titleText = title.find('input').val();
+        var textInput = '<span class="title-text">'+titleText+'</span>';
+        title.find('input').replaceWith(textInput);
+
+        var expID =  $(this).closest('.box').attr('id');
+
+        updateExp(expID, titleText, descriptionText);
+
+      }
+    });
+
+
+    $('.delete-exp').click(function(){
+
+      var expID =  $(this).closest('.box').attr('id');
+      deleteExp(expID);
+      $(this).closest('.box').remove();
+    });
+
+
+    function deleteExp(expID){
+
+      $.ajax({
+        type:"POST",
+        url: "/sensor_delete/",
+        data:{
+          'expID': expID,
+        }
+      });
+
+    }
+
+    function updateExp(expID, expName, expDescription){
+
+      $.ajax({
+        type:"POST",
+        url: "/sensor_update/",
+        data:{
+          'expID': expID,
+          'expName': expName,
+          'expDescription': expDescription,
+        }
+      });
+
+    }
+
+    function dataStats(){
+
+      $.ajax({
+        type:"GET",
+        url: "/dashboard_stats/",
+        dataType: 'json',
+        success: function (data) {
+          $('#latest-name').html(data['latest-name']);
+          $('#latest-value').html(data['latest-value']);
+          $('#latest-datetime').html(data['latest-datetime']);
+          $('#total-amount').html(data['total-amount']);
+          $('#biggest-db').html(data['biggest-db']);
+          $('#newest').html(data['newest']);
+          $('#inactive-name').html(data['inactive-name']);
+          $('#inactive-datetime').html(data['inactive-datetime']);
+          $('#inactive-value').html(data['inactive-value']);
+        }
+      });
+    }
+
+    dataStats();
+
+    function setAmountData(){
+
+      var expList = [];
+
+      {% for exp in experimentos %}
+      expList.push("{{ exp.name }}");
+      {% endfor %}
+
+      $.ajax({
+        type:"GET",
+        url: "/dashboard_data_amount/",
+        data:{
+          'experimento[]': expList,
+        },
+        dataType: 'json',
+        success: function (data) {
+          Highcharts.chart("dataAmount", data);
+        }
+      });
+    }
+
+    setAmountData();
+
+    function setAllChart(){
+
+      $.ajax({
+        type:"GET",
+        url: "/dashboard_all_data/",
+        dataType: 'json',
+        success: function (data) {
+          Highcharts.chart("allSensors", data);
+        }
+      });
+    }
+
+    setAllChart();
+
+    function setChart(experimento){
+
+      var expList = [experimento];
+
+      $.ajax({
+        type:"GET",
+        url: "/dashboard_chart_plot/",
+        data:{
+          'experimento[]': expList,
+          'minValue': 'indefinido',
+          'maxValue': 'indefinido',
+          'initialDate': 'indefinido',
+          'finalDate': 'indefinido',
+        },
+        dataType: 'json',
+        success: function (data) {
+          chartDic[experimento] = Highcharts.chart(experimento, data);
+        }
+      });
+    }
+
+    function updateChart(experimento){
+
+      var expList = [experimento];
+      var idName = "#" + experimento + "-live";
+
+      if($(idName).prop('checked')){
+        $.ajax({
+          type:"GET",
+          url: "/dashboard_chart_plot/",
+          data:{
+            'experimento[]': expList,
+
+            'minValue': 'indefinido',
+            'maxValue': 'indefinido',
+            'initialDate': 'indefinido',
+            'finalDate': 'indefinido',
+          },
+          dataType: 'json',
+          success: function (data) {
+            chartDic[experimento].update(data);
+          }
+        });
+      }
+    }
+
+    {% for exp in experimentos %}
+
+    setChart('{{ exp.name }}');
+
+    setInterval(function(){
+      updateChart('{{ exp.name }}');
+    }, 1000);
+
+    {% endfor %}
+
+    function expandBox(localVar){
+      var content =  localVar.closest('.box').find('.box-content');
+      var contentHeight = content.css('height');
+      var arrow = localVar.closest('.box').find('.box-arrow');
+
+      if(contentHeight > '0px'){
+        content.css('max-height','0');
+        arrow.addClass('fa-chevron-right').removeClass('fa-chevron-down');
+
+        var editBtn = localVar.closest('.box').find('.edit-pencil');
+        if(editBtn.prop('checked')){
+          editBtn.click();
+        }
+
+        var liveBtn = localVar.closest('.box').find('.live');
+        if(liveBtn.prop('checked')){
+          liveBtn.click();
+        }
+
+      } else{
+        content.css('max-height','1000');
+        arrow.addClass('fa-chevron-down').removeClass('fa-chevron-right');
+      }
+    }
+
+    $(".live").click(function(){
+      var content =  $(this).closest('.box').find('.box-content');
+      var contentHeight = content.css('height');
+      if(contentHeight == '0px'){
+        expandBox($(this));
+      }
+    });
+
+    $(".expand-box").click(function(){
+      expandBox($(this));
+    });
+
+    $(".title-text").click(function(){
+      expandBox($(this));
+    });
+
+    var mymap = L.map('mapid').setView([-15.8283679,-47.9057555], 13);
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox.streets',
+      accessToken: 'pk.eyJ1IjoibHVjYXNwZGZib3JnZXMiLCJhIjoiY2pwdWE0Nm53MDBmMDQ5cG90dm9jenVvdSJ9.AypFRUjfe2t8nYlAJA769Q'
+    }).addTo(mymap);
+
+    var marker = L.marker([-15.8283679,-47.9057555]).addTo(mymap);
+
+
+  });
+
+</script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+{% endblock %}

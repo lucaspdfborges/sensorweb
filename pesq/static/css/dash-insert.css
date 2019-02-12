@@ -1,0 +1,46 @@
+.table{
+  margin: 0 auto;
+  display: table;
+}
+
+.center{
+  margin: 0 auto;
+  display: table;
+}
+
+.bottom-commands{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  width: 70vw;
+}
+
+input#add_more, input#remove_more{
+   display: block;
+   text-align: center;
+   margin: 0 auto;
+   border-style: solid;
+   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+   color: #55acee;
+   font-size: 1.5em;
+   background-color: rgba(255,255,255,0);
+   min-width: 1.5em ;
+   min-height: 1.25em ;
+   border-radius: 0.25em;
+   padding-bottom: 0.2em;
+   margin-top: 1em;
+}
+
+input#add_more{
+  float:left;
+}
+
+input#add_more:hover,input#remove_more:hover{
+background: linear-gradient(45deg, rgba(28, 181, 224, 0.5) 0%, rgba(85, 172, 238, 0.8) 100%);
+color: #fff;
+}
+
+input#add_more:active, input#remove_more:active{
+background: linear-gradient(45deg, rgba(28, 181, 224, 0.5) 0%, rgba(85, 172, 238, 0.8) 100%);
+background: #55acee;
+color: #ccc;
+}

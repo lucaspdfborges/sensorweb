@@ -1,0 +1,24 @@
+{% extends 'pesq/base.html' %}
+{% load event_tags %}
+
+{% block content %}
+<h1>Pesquisadores</h1>
+  <div class="Pesquisadores">
+
+    {% for pesquisador in pesquisadores %}
+    <div class="cardPesq">
+      <a href="{% url 'pesq_detail' pk=pesquisador.pk %}">
+        <div class="cardPesq-img">
+          {% if pesquisador.foto %}
+          <img src="{{ pesquisador.foto.url }}" alt="" width="100%" height="100%" />
+          {% endif %}
+        </div>
+      </a>
+      <div class="cardPesq-name">
+        <b>{{ pesquisador.nome | short_name }}</b><br><span class="span-name">{{ pesquisador.graduacao }}, <b>{{ pesquisador.titulo }}</b></span>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+{% endblock %}

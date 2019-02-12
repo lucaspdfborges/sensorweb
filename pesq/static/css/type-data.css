@@ -1,0 +1,217 @@
+table{
+  margin: 0 auto;
+  display: table;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 0.5em;
+  padding: 1em;
+  font-weight: lighter;
+  border-collapse: collapse;
+  width: 55vw;
+  max-width: 55vw;
+  margin-bottom: 1em;
+}
+
+span{
+  margin-left: 0.5em;
+}
+
+#numOfFields{
+  width: 2em;
+}
+
+.bottom-commands{
+  display: flex;
+  align-items: center;
+  width: 55vw;
+  margin: 0 auto;
+}
+
+.numOfFields-wrapper{
+  float: right;
+  color: #55acee;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 1em;
+  border-radius: 5em;
+  padding: 0.25em;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 1px 5px rgba(50,50,50, 0.2);
+}
+
+th{
+  border-bottom: 2px solid rgba(28, 50, 80, 0.05);
+  padding: 0.5em 1.5em;
+  max-width: 12em;
+  color: #2f5f85;
+}
+
+td{
+  text-align: center;
+}
+
+.table{
+  margin: 0 auto;
+  display: table;
+}
+
+.center{
+  margin: 0 auto;
+  display: flex;
+  box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.2);
+  border-radius: 1.25em;
+  height: 2.5em;
+}
+
+
+input{
+  font-family: "Arsenal", sans-serif;
+  font-size: 1em;
+  text-align: center;
+  color: rgb(85, 172, 238);
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+}
+
+#addBtn{
+  height: 2.5em;
+  margin: 0;
+  border-radius: 1.25em;
+}
+
+input#add_several{
+   display: block;
+   text-align: center;
+   margin: 0 auto;
+   font-size: 1.5em;
+   color: #55acee;
+   min-width: 1.5em ;
+   min-height: 0.5em ;
+   border-radius: 50%;
+   padding-bottom: 0.2em;
+   border: 1px solid  rgba(28, 181, 224, 0.2);
+}
+
+input#add_more, input#remove_more{
+   display: block;
+   text-align: center;
+   margin: 0 auto;
+   font-size: 1.5em;
+   color: #55acee;
+   min-width: 1.4em ;
+   min-height: 1em ;
+   padding-bottom: 0.2em;
+   border: 1px solid rgba(50,50,50, 0.1);
+}
+
+input#add_more{
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 50%;
+}
+
+input#remove_more{
+  border-bottom-right-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+input#add_more:hover,input#remove_more:hover, input#add_several:hover{
+  background: linear-gradient(45deg, rgba(28, 181, 224, 0.3) 0%, rgba(85, 172, 238, 0.6) 100%);
+  color: ;
+}
+
+input#add_more:active, input#remove_more:active, input#add_several:hover{
+background: linear-gradient(45deg, rgba(28, 181, 224, 0.5) 0%, rgba(85, 172, 238, 0.8) 100%);
+color: #2f5f85;
+}
+
+input.value{
+  background-color: transparent;
+}
+
+tr.add:nth-child(even){
+  background-color: white;
+  border-color: white;
+}
+
+tr.add:nth-child(odd){
+  background-color: rgba(28, 50, 80, 0.04);
+  border-color: white;
+}
+
+tr.add th{
+  border-color: white;
+}
+
+.searchBtn{
+  font-family: "Arsenal", sans-serif;
+   display: block;
+   text-align: center;
+   margin: 0 auto;
+   border-style: solid;
+   box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.3);
+   border: none;
+   color: white;
+   font-size: 1em;
+   background-color: rgba(28, 50, 80, 0.8);
+   border-radius: 0.125em;
+   min-width: 1.5em ;
+   min-height: 1.25em ;
+   padding-bottom: 0.2em;
+   padding: 0.5em 1.5em;
+   width: 15em;
+ }
+
+
+ button.searchBtn:hover{
+    background:linear-gradient(45deg, rgba(28, 181, 224, 0.2) 0%, rgba(85, 172, 238, 0.7) 100%);
+    color:rgba(28, 50, 80, 0.8);
+  }
+
+ button.searchBtn:active{
+   background:linear-gradient(45deg, rgba(28, 181, 224, 0.6) 0%, rgba(85, 172, 238, 1) 100%);
+   color: rgba(28, 50, 80, 0.8);
+ }
+
+ .heading-wrapper{
+   width:  55vw;
+   margin: 0 auto;
+   display: table;
+   margin-bottom: 1em;
+ }
+ .exp-td{
+   width: 16em;
+ }
+
+
+ select.expSelect:focus{
+   font-family: "Arsenal", sans-serif;
+   border: none;
+   font-size: 0.925em;
+   color: #55acee;
+ }
+
+ select.expSelect{
+
+   border: none;
+   border: 1px solid rgba(255,255,255,0);
+   color: #55acee;
+   font-family: "Arsenal", sans-serif;
+   font-size: 0.9em;
+   height: 2.5em;
+   width: 15em;
+   background: #fafafa;
+   outline: 0;
+   overflow: hidden;
+   background-color: transparent;
+   appearance: none;
+   text-align: center;
+   -webkit-appearance: none;  /* Remove estilo padrão do Chrome */
+   -moz-appearance: none; /* Remove estilo padrão do FireFox */
+   appearance: none; /* Remove estilo padrão do FireFox*/
+ /* current browsers */
+ }
+ select.expSelect:focus{
+   border: none;
+}

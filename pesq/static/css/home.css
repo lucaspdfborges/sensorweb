@@ -1,0 +1,258 @@
+
+
+/*
+Sombras curvas - lifted
+*/
+
+.banner {
+  background: #ccc;
+  max-width: 100%;
+  background-image: url("http://geofluxo.com.br/wp-content/uploads/2018/09/Fundo1.jpg");
+  background-color: rgba(50, 120, 248, 0.5);
+  background-blend-mode: color-dodge;
+  padding: 10px 10px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.img1 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+#subscribe {
+  color: white;
+  padding: 10px 10%;
+  border: 1px solid white;
+  border-radius: 25px;
+  margin: 0 auto;
+  display: table;
+  font-size: 1.5em;
+  margin-top: 25px;
+  margin-bottom: 50px;
+
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -ms-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+#subscribe:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+#subscribe:active {
+  color: #292f33;
+  background: white;
+}
+
+#subscribe:visited {
+  background: none;
+}
+
+.banner-text {
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 50px 15px;
+  text-align: justify;
+  text-justify: inter-word;
+  line-height: 1.75em;
+}
+
+.banner-img {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10px;
+}
+
+.banner-img-item1 {
+  max-width: 500px;
+}
+
+.banner-img-item2 {
+  flex-basis: 0;
+  flex-grow: 1;
+  margin: 0;
+  min-width: 30vw;
+  color: white;
+  background-image: url("http://geofluxo.com.br/wp-content/uploads/2018/09/Fundo1.jpg");
+  background-color: rgba(50, 120, 248, 0.5);
+  background-blend-mode: color-dodge;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  text-align: justify;
+  text-justify: inter-word;
+  line-height: 2em;
+  padding: 110px 10%;
+  vertical-align: middle;
+}
+
+#sticky2 {
+  display: block;
+  left: 0;
+  z-index: 995;
+}
+
+
+#sticky2.stick {
+  position: fixed;
+  margin:0 ;
+  bottom: 0;
+  width: 100%;
+}
+
+
+/*
+
+CRONOGRAMA
+*/
+.cronograma {
+  text-align: justify;
+  text-justify: inter-word;
+  display: block;
+  margin: 10px;
+}
+
+.cronograma-intro {
+  max-width: 900px;
+  padding: 10px 15px;
+  margin: 10px auto;
+  display: block;
+}
+
+.cronograma-item {
+  display: table;
+  margin: 0 auto;
+  padding: 15px 15px;
+  max-width: 900px;
+  min-width: 50vw;
+  border-radius: 1em;
+  margin-top: 25px;
+  border: solid #55acee;
+  border-width: 1px;
+}
+
+.cronograma-item-data {
+  display: inline-block;
+  font-size: 1.5em;
+}
+
+.cronograma-plus {
+  display: inline-block;
+  cursor: pointer;
+  background: #55acee;
+  border-radius: 5px;
+  color: white;
+  font-size: 2em;
+  text-align: center;
+  margin: 16px;
+  width: 20px;
+  height: 20px;
+  line-height: 0.5em;
+}
+
+.cronograma-plus:hover {
+  background: #292f33;
+  cursor: pointer;
+}
+
+.cronograma-plus:active {
+  background: #2f5f85;
+  cursor: pointer;
+}
+
+.cronograma-evento {
+  margin-bottom: 15px;
+}
+
+.cronograma-evento-hora {
+  font-weight: lighter;
+  color: #55aecc;
+}
+
+.cronograma-evento-prof {
+  color: #696d70;
+}
+
+.cronograma-item-content {
+  margin-left: 55px;
+  justify-content: center;
+  align-items: center;
+
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -ms-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+.apoio {
+  text-align: center;
+  font-size: 2em;
+}
+
+.grid-container {
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: auto auto auto auto;
+  width: 60vw;
+  justify-content: center;
+  align-content: center;
+}
+
+.grid-item {
+  font-size: 30px;
+  text-align: center;
+}
+
+.grid-item img {
+  max-width: 15vw;
+  min-width: 170px;
+}
+
+.inscricao {
+  margin: 37px 0px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 0px;
+}
+
+#subscribe2 {
+  color: #55acee;
+  padding: 10px 10%;
+  border: 1px solid #55acee;
+  border-radius: 25px;
+  margin: 0 auto;
+  display: table;
+  font-size: 1.5em;
+  margin-top: 25px;
+  margin-bottom: 25px;
+
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -ms-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+#subscribe2:hover {
+  color: white;
+  background: #55acee;
+}
+
+#subscribe2:active {
+  color: white;
+  background: #292f33;
+  border: 2px solid #292f33;
+}
+
+#subscribe2:visited {
+  background: none;
+}

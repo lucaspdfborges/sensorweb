@@ -1,0 +1,216 @@
+.pesquisador{
+  margin: 0 auto;
+  display: table;
+}
+
+.pesq-picture{
+  margin: 0 auto;
+  display: table;
+  border-radius: 300px;
+  overflow:hidden;
+  border: 1em solid rgba(90, 120, 138, 0.1) ;
+  height: 300px;
+  width: 300px;
+}
+
+.pesq-topic{
+  background: linear-gradient(45deg, rgba(28, 181, 224, 0.7) 0%, rgba(85, 172, 238, 1) 100%);
+  color:  #fff;
+  font-size: 1.25em;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 5px;
+  width: 880px;
+  margin-top: 50px;
+  margin-bottom: 25px;
+  padding: 5px;
+}
+
+.pesq-content{
+  font-size: 1em;
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 150px 500px ;
+  grid-gap: 25px 10px;
+}
+
+.pesq-content-item{
+  font-size: 1em;
+  margin-top: 1.5em;
+  display: grid;
+  grid-template-columns: 2em 7em 40em ;
+  grid-gap: 25px 10px;
+}
+
+.pesq-content-item2{
+  font-size: 1em;
+  margin-top: 1.5em;
+  display: grid;
+  grid-template-columns: 2em 7em 30em 15em;
+  grid-gap: 25px 10px;
+}
+
+.pesq-content-data{
+  color:  #55acee;
+  font-weight: bold;
+}
+
+.pesq-content-press{
+  font-weight: light;
+  word-wrap: break-word;
+  margin-left: 2.2em;
+}
+
+.pesq-content-info{
+  word-wrap: break-word;
+  color:  #565656;
+  text-align: left;
+}
+
+.pesq-content-info a{
+  text-decoration: none;
+}
+
+.pesq-content-info a:link, .pesq-content-info a:visited{
+  color:  #565656;
+}
+
+.pesq-content-info a:hover{
+  color:  #55acee;
+}
+
+.pesq-content-info a:active{
+  color:  #2A5677;
+}
+
+.pesq-content-info a{
+  text-decoration: none;
+}
+
+.pesq-fields{
+  width: 880px;
+}
+
+.name-title{
+  font-size: 2em;
+  text-align: center;
+}
+
+.fields{
+  display: inline-block;
+  white-space: nowrap;
+  text-align: left;
+  line-height: 1em;
+  background: #888888;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px 15px 5px 15px;
+  margin-left: 2px;
+  margin-right: 2px;
+  margin-bottom: 5px;
+  text-decoration: none;
+
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -ms-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+.fields:hover{
+  background: #565656;
+  color: #fff;
+}
+
+.pesq-public{
+  font-size: 1em;
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 50px 620px 200px ;
+  grid-gap: 25px 10px;
+}
+
+.pesq-grid-3{
+  font-size: 1em;
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 50px 500px 60px ;
+  grid-gap: 25px 10px;
+}
+
+.clear { clear:both; }
+
+a.cross{
+  text-decoration: none;
+  display: block;
+}
+
+button.cross{
+  display: block;
+  float: left;
+  background-color: white;
+  color: lightsalmon;
+  border: solid 1px;
+  border-color: rgba(255,255,255,0);
+  border-radius: 0.5em;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  margin-right: 1em;
+
+}
+
+button.cross:hover{
+  color: white;
+  background: linear-gradient(45deg, lightsalmon 0%, rgba(210, 195, 195, 0.8) 100%);
+}
+
+button.cross:active{
+  color: #555;
+}
+
+ input#edit-curriculum{
+   margin: 0 auto;
+   display: table;
+   -webkit-appearance: none;
+   border: solid 1px white;
+   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+   position: relative;
+   padding: 2em 15em;
+   border-radius: 2em;
+   color: #55acee;
+   margin-top: 2em;
+ }
+
+
+ input#edit-curriculum:active,  input#edit-curriculum:checked:active{
+   -webkit-appearance: none;
+   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+   position: relative;
+   color: #555;
+ }
+
+input#edit-curriculum:checked{
+  background: linear-gradient(45deg, lightsalmon 0%, rgba(210, 195, 195, 0.8) 100%);
+  color: white;
+  content: '';
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+ input#edit-curriculum:checked::after{
+   content: 'Curriculum em edição';
+   color: white;
+   font-weight: lighter;
+   font-size: 2em;
+   position: absolute;
+   top: 0.3em;
+   left: 20%;
+ }
+
+ input#edit-curriculum::after{
+   content: 'Editar curriculum';
+   color: #55acee;
+   font-weight: lighter;
+   font-size: 2em;
+   position: absolute;
+   top: 0.3em;
+   left: 30%;
+ }

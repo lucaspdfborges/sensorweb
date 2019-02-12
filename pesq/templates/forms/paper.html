@@ -1,0 +1,30 @@
+{% extends 'pesq/pop_up.html' %}
+
+
+{% block content %}
+
+<form class="consult" method="POST" class="pesq-form">
+  {% csrf_token %}
+
+  <div id="date-field-1">
+      <label>Data de publicação: </label>
+    {{paper_form.data_publicacao}}
+  </div>
+
+  <label>Título: </label>
+  {{paper_form.titulo}}
+
+  <label>Revista: </label>
+  {{paper_form.revista}}
+
+  <label>Link: <span style="font-weight: lighter; color: #aaa;">(inicie com 'http://' ou 'https://')</span> </label>
+  {{paper_form.link}}
+
+  <label>Áreas relacionadas: </label>
+  {{paper_form.campos}}
+
+
+  <button type="submit">Salvar</button>
+</form>
+
+{% endblock %}

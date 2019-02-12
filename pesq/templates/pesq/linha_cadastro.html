@@ -1,0 +1,11 @@
+{% extends 'pesq/base.html' %}
+
+{% block content %}
+<h1>Cadastro de Linha de Pesquisa</h1>
+<form class="consult" method="POST" class="linha-form">
+  {% csrf_token %}
+  {{ linhaForm.as_p }}
+  <button type="submit">Salvar</button>
+</form>
+
+{% endblock %}

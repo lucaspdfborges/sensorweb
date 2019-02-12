@@ -1,0 +1,27 @@
+@import 'https://code.highcharts.com/css/highcharts.css';
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic);
+
+{%load static%}
+
+.highcharts-color-0 {
+  fill: #55acee;
+  stroke: #55acee;
+}
+
+.highcharts-background{
+  fill: white;
+}
+
+/* Titles */
+.highcharts-title {
+  fill: #2f5f85;
+  color:#2f5f85;
+  font-size: 2em;
+  font-weight: lighter;
+  font-family: "Arsenal", sans-serif;
+}
+
+.highcharts-axis-labels, .highcharts-axis{
+  font-weight: lighter;
+  font-family: "Arsenal", sans-serif;
+}

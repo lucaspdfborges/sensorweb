@@ -1,0 +1,188 @@
+{% extends 'pesq/base.html' %}
+{% load static %}
+
+{% block js %}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/type-data.css' %}">
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+<h1>Inserir dados manualmente </h1>
+
+<div class="form-table">
+
+<table id={{experimento}}>
+  <tr id="title">
+    <th>Data</th>
+    <th>Hora</th>
+    <th>Sensor</th>
+    <th>Valor</th>
+  </tr>
+
+  <tr class="add">
+    <td><input class="date" type="date" ></td>
+    <td><input class="time" type="time" step="1"></td>
+    <td class="exp-td"><select class="expSelect" name="">
+      {% for exp in experimentos %}
+        <option value="{{exp.name}}">{{exp.name}}</option>
+      {% endfor %}
+      </select>
+    </td>
+    <td><input class="value" type="number" value='0' step="0.1"></td>
+  </tr>
+
+</table>
+
+
+</div>
+
+<div class="bottom-commands">
+
+  <button id="addBtn" class="searchBtn" type="submit" class="btn btn-block btn-primary">Salvar</button>
+
+  <div class="center">
+  <input type="button" value="+" id="add_more">
+  <input type="button" value="-" id="remove_more">
+  </div>
+
+  <div class="numOfFields-wrapper">
+    <span>Inserir</span>
+   <input id="numOfFields" type="number" min="1" max="25" step="1" value="10" />
+    <span>colunas</span>
+    <input type="button" id="add_several" value="+"/>
+  </div>
+
+</div>
+
+<div id="msgSuccess" title="mensagem" style="display:none">
+  <p>Dados gravados com sucesso</p>
+</div>
+
+<div id="msgError" style="display:none">
+  <p> Erro ao gravar os dados</p><br>
+  <p>Verifique se os dados estão corretos</p>
+</div>
+
+  <script>
+
+    $(document).ready(function(){
+
+
+
+    function setInitialDateTime(){
+      var currentDate = new Date();
+      var lastBox = $(".form-table").first().find("table").find("tr.add").last();
+      var inputDate = currentDate.getFullYear()+'-'+currentDate.getMonth()+'-'+currentDate.getDate();
+      var inputTime = currentDate.getHours()+':'+(currentDate.getMinutes() < 10?'0':'')+currentDate.getMinutes()+':'+(currentDate.getSeconds() < 10?'0':'')+currentDate.getSeconds();
+      lastBox.find('input.date').val(inputDate);
+      lastBox.find('input.time').val(inputTime);
+    }
+
+  setInitialDateTime();
+
+  $(function () {
+      $.ajaxSetup({
+        headers: { "X-CSRFToken": getCookie("csrftoken") }
+      });
+  });
+
+  function getCookie(c_name)
+  {
+      if (document.cookie.length > 0)
+      {
+          c_start = document.cookie.indexOf(c_name + "=");
+          if (c_start != -1)
+          {
+              c_start = c_start + c_name.length + 1;
+              c_end = document.cookie.indexOf(";", c_start);
+              if (c_end == -1) c_end = document.cookie.length;
+              return unescape(document.cookie.substring(c_start,c_end));
+          }
+      }
+      return "";
+   }
+
+   $("#addBtn").click(function(){
+
+       var expList = [];
+       var dateList = [];
+       var timeList = [];
+       var valueList = [];
+
+       $(".form-table").first().find("table").find("tr").each(function(){
+
+         if($(this).find("input.value").isValid()){
+           expList.push($(this).find("select.expSelect").val());
+           dateList.push($(this).find("input.date").val());
+           timeList.push($(this).find("input.time").val());
+           valueList.push($(this).find("input.value").val());
+         }
+
+       })
+
+       expList.shift();
+       dateList.shift();
+       timeList.shift();
+       valueList.shift();
+
+       $.ajax({
+                type:"POST",
+                url:"/dashboard_insert_data/",
+                data:{
+                  'expList[]': expList,
+                  'dateList[]': dateList,
+                  'timeList[]': timeList,
+                  'valueList[]': valueList,
+                },
+                success: function(result){
+                  alert('Dados inseridos');
+                  window.location.href = "/dashboard/inserir-dados/";
+                },
+                error: function(xhr, status, error){
+                  alert('Erro ao inserir os dados');
+                },
+       });
+   });
+
+  function addOneField(){
+
+    var currentDate = new Date();
+
+    var lastBox = $(".form-table").first().find("table").find("tr.add").last();
+    var clone = lastBox.clone();
+    var inputExp = lastBox.find('select.expSelect').find(':selected').text();
+    var inputDate = currentDate.getFullYear()+'-'+currentDate.getMonth()+'-'+currentDate.getDate();
+    var inputTime = currentDate.getHours()+':'+(currentDate.getMinutes() < 10?'0':'')+currentDate.getMinutes()+':'+(currentDate.getSeconds() < 10?'0':'')+currentDate.getSeconds();
+    clone.find('input.date').val(inputDate);
+    clone.find('input.time').val(inputTime);
+    clone.find('select.expSelect').val(inputExp);
+    $(".form-table").first().find("table").append(clone);
+
+  };
+
+  $('#add_several').click(function(){
+    var numOfFields = $('#numOfFields').val();
+    for(var i = 0; i < numOfFields; i++){
+      addOneField();
+    }
+  });
+
+    $('#add_more').click(function(){
+      addOneField();
+    });
+
+    $('#remove_more').click(function(){
+          var size = $(".form-table").first().find("table").find("tr.add").length;
+          if(size>1){
+            $(".form-table").first().find("table").find("tr.add").last().remove();
+          }
+      });
+
+  });
+  </script>
+
+{% endblock %}

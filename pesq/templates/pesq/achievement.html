@@ -1,0 +1,26 @@
+{% extends 'pesq/pop_up.html' %}
+
+{% block content %}
+<h1>Adicionar Atividade Curricular</h1>
+<form class="consult" method="POST">
+  {% csrf_token %}
+
+<div id="date-field-1">
+  <label>Data de início: </label>
+  {{achievement_form.data_inicio}}
+</div>
+
+<div id="date-field-2">
+  <label>Data de término: </label>
+  {{achievement_form.data_fim}}
+</div>
+  <label>Descrição: </label>
+  {{achievement_form.texto}}
+
+  <label>Link: </label>
+  {{achievement_form.link}}
+
+  <button type="submit" onclick="closeWin()" >Salvar</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% load static %}
+<hmtl>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Arsenal" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'js/home.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pesq.css' %}">
+    <link rel="stylesheet" href="{% static 'css/details.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/linhas.css' %}">
+    <link rel="stylesheet" href="{% static 'css/curriculum.css' %}">
+  </head>
+
+  <body>
+
+
+    <div class="main">
+      <!-- HERE WE PLACE THE CONTENT-->
+      {% block content %}
+      {% endblock %}
+    </div>
+
+
+  </body>
+  </html>
