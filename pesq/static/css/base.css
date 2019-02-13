@@ -1,3 +1,4 @@
+
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic);
 
 /*html {
@@ -304,13 +305,14 @@ footer {
   margin-top: 2em;
   position:fixed;
   float: left;
+  margin-left: -2em;
 }
 
 .login-item{
   border-radius: 50%;
   box-shadow: 2px 2px 6px rgba(50, 50 ,50, 0.2);
-  width: 3vw;
-  height: 3vw;
+  width: 2em;
+  height: 2em;
   padding: 0.5em;
   background-size:80%;
   background-repeat: no-repeat;
@@ -362,6 +364,6 @@ Janelas POP-UP
   background-repeat:no-repeat;
   background-position: center center;
   background-image: url('/static/img/bg4.png');
-  height: 11em;
+  height: 12vw;
   padding-bottom: 2em;
 }
