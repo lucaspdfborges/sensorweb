@@ -353,6 +353,7 @@ Toggle Edit
   display: inline-block;
   width: 2em;
   height: 1em;
+  align-self: center;
 }
 
 .switch input {
@@ -429,8 +430,8 @@ input:checked + .slider:before {
 
 .chart-wrapper{
   position: relative;
-  width: 70vw;
-  max-width: 70vw;
+  width: calc( 75vw +  3em);
+  max-width: calc( 75vw +  3em);
   margin: 0 auto;
   display: table;
 }
@@ -468,4 +469,40 @@ input:checked + .slider:before {
   max-width: 45vw;
   margin: 0 auto;
   position:relative;
+}
+
+/*
+Pagination
+*/
+
+.pagination-wrapper{
+  margin: 60px auto;
+  text-align: center;
+}
+
+#pagination-demo{
+  display: inline-block;
+  margin-bottom: 1.75em;
+}
+
+#pagination-demo li{
+  display: inline-block;
+  min-width: 2em;
+}
+li.page-item:first-of-type{
+  border-left: none;
+}
+
+li.page-item{
+  border-left: 1px #ccc solid;
+}
+
+li.page-item a{
+  text-decoration: none;
+  color: #55acee;
+}
+
+li.page-item.active a{
+  text-decoration: none;
+  color:rgba(28, 50, 80, 1);
 }

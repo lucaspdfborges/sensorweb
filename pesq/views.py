@@ -14,6 +14,7 @@ from rest_framework import permissions
 from django.http import JsonResponse
 from django.db.models import Q
 import csv
+import math
 from operator import attrgetter
 from django.utils import timezone
 
@@ -443,15 +444,17 @@ def dashdata_download(request):
 
 @login_required
 def dashboard_chart_data(request):
-
+    # section one is from 0 to 49, section 2 from 50 to 99, and go on...
+    lowerLim = 0
+    upperLim =50
     usuario = request.user.profile
     pk = usuario.pk
 
-    Exp = Experimento.objects.filter(pesquisador=pk).first()
-    dataExp = DashData.objects.filter(experimento=Exp)
+    dataExp = DashData.objects.all()[lowerLim:upperLim]
+    sections = range(1, 1+math.ceil(DashData.objects.all().count()/50))
     experimentos = Experimento.objects.filter(pesquisador=pk)
 
-    return render(request, 'dash/dashboard_data.html', {'dataExp':dataExp, 'experimentos':experimentos} )
+    return render(request, 'dash/dashboard_data.html', {'dataExp':dataExp, 'experimentos':experimentos, 'sections': sections} )
 
 @login_required
 def chart_data(request):

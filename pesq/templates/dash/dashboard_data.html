@@ -4,6 +4,10 @@
 
 {% block js %}
 <script src="{% static 'js/date-picker.js' %}"></script>
+<script src="{% static 'js/data.js' %}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.1/jquery.twbsPagination.min.js"></script>
 {% endblock %}
 
 {% block css %}
@@ -42,10 +46,10 @@
     <div id="initialDateLabel" class="grid-item2">Data e hora inicial</div>
 
     <div class="grid-item2">
-      <input id="initialDate" type="date" name="" value="">
+      <input id="initialTime" type="time" name="" value="00:00:00" step="1">
     </div>
     <div class="grid-item2">
-      <input id="initialTime" type="time" name="" value="00:00:00" step="1">
+      <input id="initialDate" type="date" name="" value="">
     </div>
 
   </div>
@@ -73,12 +77,11 @@
 
     <div id="finalDateLabel" class="grid-item2">Data e hora final</div>
     <div class="grid-item2">
-      <input id="finalDate" type="date" name="" value="">
-    </div>
-    <div class="grid-item2">
       <input id="finalTime" type="time" name="" value="00:00:00" step="1">
     </div>
-
+    <div class="grid-item2">
+      <input id="finalDate" type="date" name="" value="">
+    </div>
   </div>
 
   <div class="grid-container2">
@@ -177,6 +180,16 @@
   {% endfor %}
 
 </table>
+
+<div class="pagination-wrapper">
+  <div class="pagination-container">
+    <div class="pagination-row">
+      <div class="pagination-col-sm-12">
+           <ul id="pagination-demo" class="pagination-sm"></ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 
@@ -541,6 +554,18 @@
     }
 
   });
+
+  $('#pagination-demo').twbsPagination({
+          totalPages: 16,
+          visiblePages: 6,
+          next: 'Next',
+          prev: 'Prev',
+          onPageClick: function (event, page) {
+              //fetch content and render here
+              $('#page-content').text('Page ' + page) + ' content here';
+          }
+      });
+
 
 </script>
 
