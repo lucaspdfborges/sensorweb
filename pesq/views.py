@@ -366,7 +366,7 @@ class DashDataSearch(TemplateView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
-        experimento = request.GET['experimento']
+        expName = request.GET['expName']
 
         initialDate = request.GET['initialDate']
         finalDate = request.GET['finalDate']
@@ -377,7 +377,8 @@ class DashDataSearch(TemplateView):
         usuario = request.user.profile
         pk = usuario.pk
 
-        dashList = DashData.objects.filter(pesquisador=pk, experimento=experimento)
+        experimento = Experimento.objects.filter(pesquisador=pk, name=expName).first()
+        dashList = DashData.objects.filter(experimento=experimento)
 
         if not initialDate=='indefinido':
             dashList = dashList.filter(data__gte=initialDate)
@@ -470,7 +471,6 @@ def chart_data(request):
 
         maxValue = request.GET['maxValue']
         minValue = request.GET['minValue']
-
 
         for exp in experimento:
 

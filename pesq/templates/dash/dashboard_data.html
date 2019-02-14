@@ -119,7 +119,7 @@
 
 <br>
 
-<table class="{{experimento}}" id="consult">
+<table class="sensor-3" id="consult">
 
   <tr id="title">
     <th class="data"> Data e hora</th>
@@ -193,6 +193,18 @@
 
 <script>
 
+  // Global variables
+
+  var dateList = [];
+  var valueList = [];
+  var pkList = [];
+  var expDataList = {};
+  var section= 0;
+
+  {% for exp in experimentos%}
+     expDataList['{{exp.name}}'] = 'no';
+  {% endfor %}
+
   $(function () {
     $.ajaxSetup({
       headers: { "X-CSRFToken": getCookie("csrftoken") }
@@ -214,6 +226,18 @@
     }
     return "";
   }
+
+  $(".chkPlot").change(function(){
+
+    var exp =  $(this).prop('value');
+
+    if(!$(this).prop('checked')){
+      expDataList[exp] = 'no';
+    }else{
+       expDataList[exp] = 'yes';
+    }
+
+  });
 
   $("#selectMin").change(function(){
     if(!$(this).prop('checked')){
@@ -316,7 +340,7 @@
 
   $("#searchBtnAll").click(function(){
 
-    var expID = $(document).find("table").first().attr('class');
+    var expID = expDataList[0];
 
     var minValue = 'indefinido';
     var maxValue = 'indefinido';
@@ -327,35 +351,35 @@
       $(this).remove();
     });
 
+
     $.ajax({
       type:"GET",
       url:"/dashdata-search/",
       dataType: 'json',
       data:{
-        'experimento': expID,
+        'expName': expID,
         'minValue': minValue,
         'maxValue': maxValue,
         'initialDate': initialDate,
         'finalDate': finalDate,
       },
+
       success: function (dataSearch) {
-        var dateList = dataSearch.dateList;
-        var valueList = dataSearch.valueList;
-        var pkList = dataSearch.pkList;
+       dateList = dataSearch.dateList;
+       valueList = dataSearch.valueList;
+       pkList = dataSearch.pkList;
 
         for(var i=0; i < valueList.length; i++){
           addOneField(dateList[i], valueList[i], pkList[i]);
         }
       }
     });
-
-
   });
 
 
   $("#searchBtn").click(function(){
 
-    var expID = $(document).find("table").first().attr('class');
+    var expID = expDataList[0];
 
     if(!$('#selectMin').prop('checked')){
       var minValue = 'indefinido';
@@ -390,7 +414,7 @@
       url:"/dashdata-search/",
       dataType: 'json',
       data:{
-        'experimento': expID,
+        'expName': expID,
         'minValue': minValue,
         'maxValue': maxValue,
         'initialDate': initialDate,
@@ -402,7 +426,11 @@
         var pkList = dataSearch.pkList;
 
         for(var i=0; i < valueList.length; i++){
-          addOneField(dateList[i], valueList[i], pkList[i]);
+            addOneField(dateList[i], valueList[i], pkList[i]);
+            /*
+          if(i >= 50*section && i < (50)*(section+1)){
+            addOneField(dateList[i], valueList[i], pkList[i]);
+          }*/
         }
       }
     });
