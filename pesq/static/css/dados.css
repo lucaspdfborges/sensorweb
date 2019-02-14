@@ -17,8 +17,8 @@ table#consult{
   padding: 1em;
   font-weight: lighter;
   border-collapse: collapse;
-  width: 55vw;
-  max-width: 55vw;
+  width: calc(75vw + 1em);
+  min-width: calc(75vw + 1em);
 }
 
 #consult th{
@@ -42,13 +42,13 @@ td{
 }
 
 td.data, td.dado, th.data, th.dado{
-  width: 12em;
-  max-width: 12em;
+  max-width: 21vw;
 }
 
 td.last, td.delete, th.last, th.delete{
   width: 5em;
   max-width: 5em;
+  z-index: 100;
 }
 
 #title{
@@ -122,6 +122,16 @@ input[type="number"]{
   width: 6em;
 }
 
+input[type=number] {
+  -moz-appearance:textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 #searchBtn{
   float: left;
   background-color: white;
@@ -135,23 +145,23 @@ input[type="number"]{
 
 .searchBtn{
   font-family: "Arsenal", sans-serif;
-   display: block;
-   text-align: center;
-   box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.3);
-   border: none;
-   color: white;
-   font-size: 1em;
-   background-color: rgba(28, 50, 80, 0.8);
-   border-radius: 0.125em;
-   margin-top: 1em;
-   padding: 0.5em 1em;
-   width: 25vw;
-  }
+  display: block;
+  text-align: center;
+  box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.3);
+  border: none;
+  color: white;
+  font-size: 1em;
+  background-color: rgba(28, 50, 80, 0.8);
+  border-radius: 0.125em;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  width: 25vw;
+}
 
 button.searchBtn:hover{
-   background:linear-gradient(45deg, rgba(28, 181, 224, 0.2) 0%, rgba(85, 172, 238, 0.7) 100%);
-   color:rgba(28, 50, 80, 0.8);
- }
+  background:linear-gradient(45deg, rgba(28, 181, 224, 0.2) 0%, rgba(85, 172, 238, 0.7) 100%);
+  color:rgba(28, 50, 80, 0.8);
+}
 
 button.searchBtn:active{
   background:linear-gradient(45deg, rgba(28, 181, 224, 0.6) 0%, rgba(85, 172, 238, 1) 100%);
@@ -236,7 +246,7 @@ Toggle Delete
 
   height: 0.75em;
   width: 0.75em;
-  left: 0.15em;
+  left: 0.13em;
   bottom: 0.12em;
   background-color: white;
   -webkit-transition: .3s;

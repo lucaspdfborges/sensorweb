@@ -503,7 +503,7 @@
 
       var oldDate = $(this).closest("tr.item").find("td.data");
       var oldDateValue = oldDate.text();
-      oldDate.replaceWith('<td class="data"> <input type="date" value="'+oldDateValue.slice(8,12)+'-'+oldDateValue.slice(5,7)+'-'+oldDateValue.slice(2,4)+'"><input type="time" value='+oldDateValue.slice(13,21)+'></td>');
+      oldDate.replaceWith('<td class="data"> <input type="date" value="'+oldDateValue.slice(8,12)+'-'+oldDateValue.slice(5,7)+'-'+oldDateValue.slice(2,4)+'"><input type="time" step="1" value='+oldDateValue.slice(13,21)+'></td>');
 
     } else{
 
