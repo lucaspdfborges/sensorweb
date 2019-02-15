@@ -263,11 +263,25 @@ def sensor_update(request):
 
 @login_required
 def dashboard_chart_detail(request):
+
     usuario = request.user.profile
     pk = usuario.pk
-    experimentos = Experimento.objects.filter(pesquisador=pk)
 
-    return render(request, 'dash/dashboard_detail.html', {'experimentos':experimentos} )
+    experimentos = Experimento.objects.filter(pesquisador=pk)
+    dataExp = DashData.objects.filter(experimento__in=experimentos)
+
+    maxValue = dataExp.order_by('dado').reverse().first().dado
+    minValue =  dataExp.order_by('dado').first().dado
+
+    oldestDateTime = dataExp.order_by('data').first().data
+    oldestDate = str(oldestDateTime)[0:10]
+    oldestTime = str(oldestDateTime)[11:19]
+
+    nowDateTime = str(datetime.datetime.now())
+    nowDate = nowDateTime[0:10]
+    nowTime = nowDateTime[11:19]
+
+    return render(request, 'dash/dashboard_detail.html', {'dataExp':dataExp, 'experimentos':experimentos, 'maxValue': maxValue, 'minValue':minValue, 'oldestDate': oldestDate, 'oldestTime': oldestTime, 'nowDate': nowDate, 'nowTime': nowTime} )
 
 @login_required
 def dashboard_update_data(request):
@@ -492,7 +506,7 @@ def chart_data(request):
         usuario = request.user.profile
         pk = usuario.pk
 
-        experimento = request.GET.getlist('experimento[]')
+        experimentos = request.GET.getlist('expNames[]')
 
         initialDate = request.GET['initialDate']
         finalDate = request.GET['finalDate']
@@ -500,7 +514,7 @@ def chart_data(request):
         maxValue = request.GET['maxValue']
         minValue = request.GET['minValue']
 
-        for exp in experimento:
+        for exp in experimentos:
 
             Exp = Experimento.objects.filter(pesquisador=pk, name=exp).first()
 
@@ -523,7 +537,6 @@ def chart_data(request):
                 valueX = dataset[i].data.strftime('%H:%M:%S')
                 valueY = dataset[i].dado
                 listExpXY.append([valueX,valueY])
-
 
             listXY.append({
                 'name': 'experimentos',

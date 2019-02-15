@@ -41,10 +41,10 @@
 
     <div id="initialDateLabel" class="grid-item2">Data e hora inicial</div>
     <div class="grid-item2">
-      <input id="initialDate" type="date" name="" value="">
+      <input id="initialTime" type="time" name="" value="{{oldestTime}}" step="1">
     </div>
     <div class="grid-item2">
-      <input id="initialTime" type="time" name="" value="00:00:00" step="1">
+      <input id="initialDate" type="date" name="" value="{{oldestDate}}">
     </div>
 
   </div>
@@ -59,7 +59,7 @@
     <div id="minLabel" class="grid-item2">Mínimo</div>
 
     <div class="grid-item2">
-      <input id="minValue" type="number" name="" value="0">
+      <input id="minValue" type="number" name="" value="{{minValue}}">
     </div>
   </div>
 
@@ -72,11 +72,12 @@
 
     <div id="finalDateLabel" class="grid-item2">Data e hora final</div>
     <div class="grid-item2">
-      <input id="finalDate" type="date" name="" value="">
+      <input id="finalTime" type="time" name="" value="{{nowTime}}" step="1">
     </div>
     <div class="grid-item2">
-      <input id="finalTime" type="time" name="" value="00:00:00" step="1">
-  </div>
+      <input id="finalDate" type="date" name="" value="{{nowDate}}">
+    </div>
+
 
   </div>
 
@@ -90,7 +91,7 @@
     <div id="maxLabel" class="grid-item2">Máximo</div>
 
     <div class="grid-item2">
-      <input id="maxValue" type="number" name="" value="0">
+      <input id="maxValue" type="number" name="" value="{{maxValue}}">
     </div>
   </div>
 
@@ -102,12 +103,12 @@
   <div class="flex-container ">
     <div class="divExps">
       <label class="switchExp">
-        <input class="chkPlot" type="checkbox" name="item" value="{{ exp.name }}"/>
+        <input class="chkPlot" type="checkbox" name="item" value="{{ exp.name }}" checked/>
         <span class="sliderExp roundExp"></span>
       </label>
       {{ exp.name }}
     </div>
-    </div>
+  </div>
   {% endfor %}
 
 </div>
@@ -119,12 +120,44 @@
 
 
 <script>
+  //Global variables
+
+  var minValue = 'indefinido';
+  var maxValue = 'indefinido';
+  var initialDate = 'indefinido';
+  var finalDate = 'indefinido';
+
+  var expDataList = {};
+  var expList = [];
+
+  {% for exp in experimentos%}
+     expDataList['{{exp.name}}'] = 'yes';
+     expList.push('{{exp.name}}');
+  {% endfor %}
 
   $(function () {
     $.ajaxSetup({
       headers: { "X-CSRFToken": getCookie("csrftoken") }
     });
   });
+
+$(function () {
+  $.ajax({
+    type:"GET",
+    url: "/dashboard_chart_plot/",
+    data:{
+      'expNames[]': expList,
+      'minValue': 'indefinido',
+      'maxValue': 'indefinido',
+      'initialDate': 'indefinido',
+      'finalDate': 'indefinido',
+    },
+    dataType: 'json',
+    success: function (data) {
+      Highcharts.chart("grafico", data);
+    }
+  });
+});
 
   function getCookie(c_name)
   {
@@ -141,7 +174,6 @@
     }
     return "";
   }
-
 
   $("#selectMin").change(function(){
     if(!$(this).prop('checked')){
@@ -222,24 +254,33 @@
 
   });
 
+  $(".chkPlot").change(function(){
+
+    var exp =  $(this).prop('value');
+
+    if(!$(this).prop('checked')){
+      expDataList[exp] = 'no';
+    }else{
+       expDataList[exp] = 'yes';
+    }
+  });
+
 
   $("#searchBtnAll").click(function(){
 
-    var expIDlist = [];
+    var expList = [];
 
-    $(".chkPlot").each(function(){
-        var expID = $(this).attr('value');
-        if($(this).prop('checked')){
-          expIDlist.push(expID);
-        }
-    });
+    for(var key in expDataList){
+      if(expDataList[key]=='yes'){
+        expList.push(key);
+      }
+    }
 
     $.ajax({
       type:"GET",
       url: "/dashboard_chart_plot/",
       data:{
-        'experimento[]': expIDlist,
-
+        'expNames[]': expList,
         'minValue': 'indefinido',
         'maxValue': 'indefinido',
         'initialDate': 'indefinido',
@@ -248,14 +289,24 @@
       dataType: 'json',
       success: function (data) {
         Highcharts.chart("grafico", data);
-      }
+      },
+      error:function(){
+        Highcharts.chart("grafico", {});
+      },
     });
 
   });
 
   $("#searchBtn").click(function(){
 
-    var expID = $(document).find(".dash-chart-detail").first().attr('id');
+    var expList = [];
+
+    for(var key in expDataList){
+      if(expDataList[key]=='yes'){
+        expList.push(key);
+      }
+    }
+
 
     if(!$('#selectMin').prop('checked')){
       var minValue = 'indefinido';
@@ -285,20 +336,11 @@
       $(this).remove();
     });
 
-    var expIDlist = [];
-
-    $(".chkPlot").each(function(){
-        var expID = $(this).attr('value');
-        if($(this).prop('checked')){
-          expIDlist.push(expID);
-        }
-    });
-
     $.ajax({
       type:"GET",
       url: "/dashboard_chart_plot/",
       data:{
-        'experimento[]': expIDlist,
+        'expNames[]': expList,
         'minValue': minValue,
         'maxValue': maxValue,
         'initialDate': initialDate,
@@ -307,7 +349,10 @@
       dataType: 'json',
       success: function (data) {
         Highcharts.chart("grafico", data);
-      }
+      },
+      error:function(){
+        Highcharts.chart("grafico", {});
+      },
     });
 
   });
