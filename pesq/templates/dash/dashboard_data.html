@@ -385,9 +385,8 @@
           addOneField(dateList[i], valueList[i], pkList[i]);
         }
 
+        $('#pagination-demo').twbsPagination('destroy');
         paginationLoad(sections);
-        $('#pagination-demo').load(location.href + " #pagination-demo");
-
 
       }
     });
@@ -454,7 +453,7 @@
         for(var i=0; i < valueList.length; i++){
             addOneField(dateList[i], valueList[i], pkList[i]);
           }
-        $('#pagination-demo').load(location.href + " #pagination-demo");
+        $('#pagination-demo').twbsPagination('destroy');
         paginationLoad(sections);
       }
     });
@@ -635,6 +634,7 @@
   });
 
   function paginationLoad(sections){
+
     $('#pagination-demo').twbsPagination({
             totalPages: sections,
             visiblePages: 3,
@@ -651,8 +651,6 @@
   }
 
   paginationLoad('{{sections}}');
-
-
 
 
 </script>
