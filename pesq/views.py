@@ -15,6 +15,7 @@ from django.http import JsonResponse
 from django.db.models import Q
 import csv
 import math
+import datetime
 from operator import attrgetter
 from django.utils import timezone
 
@@ -414,8 +415,6 @@ class DashDataSearch(TemplateView):
         valueList = []
         pkList = []
 
-
-
         for dash in dashList:
             dateList.append(dash.data)
             valueList.append(dash.dado)
@@ -469,10 +468,22 @@ def dashboard_chart_data(request):
 
     experimentos = Experimento.objects.filter(pesquisador=pk)
     dataExp = DashData.objects.filter(experimento__in=experimentos)
+
+    maxValue = dataExp.order_by('dado').reverse().first().dado
+    minValue =  dataExp.order_by('dado').first().dado
+
+    oldestDateTime = dataExp.order_by('data').first().data
+    oldestDate = str(oldestDateTime)[0:10]
+    oldestTime = str(oldestDateTime)[11:19]
+
+    nowDateTime = str(datetime.datetime.now())
+    nowDate = nowDateTime[0:10]
+    nowTime = nowDateTime[11:19]
+
     sections =  math.ceil(dataExp.count()/50)
     dataExp = dataExp[lowerLim:upperLim]
 
-    return render(request, 'dash/dashboard_data.html', {'dataExp':dataExp, 'experimentos':experimentos, 'sections': sections} )
+    return render(request, 'dash/dashboard_data.html', {'dataExp':dataExp, 'experimentos':experimentos, 'sections': sections, 'maxValue': maxValue, 'minValue':minValue, 'oldestDate': oldestDate, 'oldestTime': oldestTime, 'nowDate': nowDate, 'nowTime': nowTime} )
 
 @login_required
 def chart_data(request):

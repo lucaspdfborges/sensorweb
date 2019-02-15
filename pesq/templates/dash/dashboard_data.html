@@ -45,10 +45,10 @@
     <div id="initialDateLabel" class="grid-item2">Data e hora inicial</div>
 
     <div class="grid-item2">
-      <input id="initialTime" type="time" name="" value="00:00:00" step="1">
+      <input id="initialTime" type="time" name="" value="{{oldestTime}}" step="1">
     </div>
     <div class="grid-item2">
-      <input id="initialDate" type="date" name="" value="">
+      <input id="initialDate" type="date" name="" value="{{oldestDate}}">
     </div>
 
   </div>
@@ -63,7 +63,7 @@
     <div id="minLabel" class="grid-item2">Mínimo</div>
 
     <div class="grid-item2">
-      <input id="minValue" type="number" name="" value="0">
+      <input id="minValue" type="number" name="" value="{{minValue}}">
     </div>
   </div>
 
@@ -76,10 +76,10 @@
 
     <div id="finalDateLabel" class="grid-item2">Data e hora final</div>
     <div class="grid-item2">
-      <input id="finalTime" type="time" name="" value="00:00:00" step="1">
+      <input id="finalTime" type="time" name="" value="{{nowTime}}" step="1">
     </div>
     <div class="grid-item2">
-      <input id="finalDate" type="date" name="" value="">
+      <input id="finalDate" type="date" name="" value="{{nowDate}}">
     </div>
   </div>
 
@@ -93,12 +93,11 @@
     <div id="maxLabel" class="grid-item2">Máximo</div>
 
     <div class="grid-item2">
-      <input id="maxValue" type="number" name="" value="0">
+      <input id="maxValue" type="number" name="" value="{{maxValue}}">
     </div>
   </div>
 
 </div>
-
 
 <div class="great-flex-container">
 
@@ -106,7 +105,7 @@
   <div class="flex-container ">
     <div class="divExps">
       <label class="switchExp">
-        <input class="chkPlot" type="checkbox" name="item" value="{{ exp.name }}"/>
+        <input class="chkPlot" type="checkbox" name="item" value="{{ exp.name }}" checked/>
         <span class="sliderExp roundExp"></span>
       </label>
       {{ exp.name }}
@@ -205,10 +204,11 @@
   var initialDate = 'indefinido';
   var finalDate = 'indefinido';
 
-  var expID = [];
+  var expList = [];
 
   {% for exp in experimentos%}
-     expDataList['{{exp.name}}'] = 'no';
+     expDataList['{{exp.name}}'] = 'yes';
+     expList.push('{{exp.name}}');
   {% endfor %}
 
   $(function () {
@@ -345,11 +345,11 @@
 
   $("#searchBtnAll").click(function(){
 
-    expID = [];
+    expList = [];
 
     for(var key in expDataList){
       if(expDataList[key]=='yes'){
-        expID.push(key);
+        expList.push(key);
       }
     }
 
@@ -367,7 +367,7 @@
       url:"/dashdata-search/",
       dataType: 'json',
       data:{
-        'expNames[]': expID,
+        'expNames[]': expList,
         'minValue': minValue,
         'maxValue': maxValue,
         'initialDate': initialDate,
@@ -394,15 +394,13 @@
 
   $("#searchBtn").click(function(){
 
-    expID = [];
+    expList = [];
 
     for(var key in expDataList){
       if(expDataList[key]=='yes'){
-        expID.push(key);
+        expList.push(key);
       }
     }
-
-    alert(expID);
 
     if(!$('#selectMin').prop('checked')){
       minValue = 'indefinido';
@@ -437,7 +435,7 @@
       url:"/dashdata-search/",
       dataType: 'json',
       data:{
-        'expNames[]': expID,
+        'expNames[]': expList,
         'minValue': minValue,
         'maxValue': maxValue,
         'initialDate': initialDate,
@@ -472,7 +470,7 @@
         url:"/dashdata-search/",
         dataType: 'json',
         data:{
-          'expNames[]': expID,
+          'expNames[]': expList,
           'minValue': minValue,
           'maxValue': maxValue,
           'initialDate': initialDate,
