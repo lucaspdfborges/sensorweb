@@ -4,7 +4,6 @@
 
 {% block js %}
 <script src="{% static 'js/date-picker.js' %}"></script>
-<script src="{% static 'js/data.js' %}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.1/jquery.twbsPagination.min.js"></script>
@@ -119,7 +118,7 @@
 
 <br>
 
-<table class="sensor-3" id="consult">
+<table class="sensor-3" id="consult" value={{sections}}>
 
   <tr id="title">
     <th class="data"> Data e hora</th>
@@ -201,6 +200,13 @@
   var expDataList = {};
   var section= 0;
 
+  var minValue = 'indefinido';
+  var maxValue = 'indefinido';
+  var initialDate = 'indefinido';
+  var finalDate = 'indefinido';
+
+  var expID = [];
+
   {% for exp in experimentos%}
      expDataList['{{exp.name}}'] = 'no';
   {% endfor %}
@@ -236,7 +242,6 @@
     }else{
        expDataList[exp] = 'yes';
     }
-
   });
 
   $("#selectMin").change(function(){
@@ -340,69 +345,88 @@
 
   $("#searchBtnAll").click(function(){
 
-    var expID = expDataList[0];
+    expID = [];
 
-    var minValue = 'indefinido';
-    var maxValue = 'indefinido';
-    var initialDate = 'indefinido';
-    var finalDate = 'indefinido';
+    for(var key in expDataList){
+      if(expDataList[key]=='yes'){
+        expID.push(key);
+      }
+    }
+
+    minValue = 'indefinido';
+    maxValue = 'indefinido';
+    initialDate = 'indefinido';
+    finalDate = 'indefinido';
 
     $("#consult").find("tr.item").each(function(){
       $(this).remove();
     });
-
 
     $.ajax({
       type:"GET",
       url:"/dashdata-search/",
       dataType: 'json',
       data:{
-        'expName': expID,
+        'expNames[]': expID,
         'minValue': minValue,
         'maxValue': maxValue,
         'initialDate': initialDate,
         'finalDate': finalDate,
+        'section': 1,
       },
 
       success: function (dataSearch) {
        dateList = dataSearch.dateList;
        valueList = dataSearch.valueList;
        pkList = dataSearch.pkList;
+       var sections = dataSearch.sections;
 
         for(var i=0; i < valueList.length; i++){
           addOneField(dateList[i], valueList[i], pkList[i]);
         }
+
+        paginationLoad(sections);
+        $('#pagination-demo').load(location.href + " #pagination-demo");
+
+
       }
     });
   });
 
-
   $("#searchBtn").click(function(){
 
-    var expID = expDataList[0];
+    expID = [];
+
+    for(var key in expDataList){
+      if(expDataList[key]=='yes'){
+        expID.push(key);
+      }
+    }
+
+    alert(expID);
 
     if(!$('#selectMin').prop('checked')){
-      var minValue = 'indefinido';
+      minValue = 'indefinido';
     } else{
-      var minValue = $("#minValue").val();
+      minValue = $("#minValue").val();
     }
 
     if(!$('#selectMax').prop('checked')){
-      var maxValue = 'indefinido';
+      maxValue = 'indefinido';
     } else{
-      var maxValue = $("#maxValue").val();
+      maxValue = $("#maxValue").val();
     }
 
     if(!$('#initialDate').prop('checked')){
-      var initialDate = 'indefinido';
+      initialDate = 'indefinido';
     } else{
-      var initialDate = $("#initialDate").val() + " " + $("#initialTime").val();
+      initialDate = $("#initialDate").val() + " " + $("#initialTime").val();
     }
 
     if(!$('#finalDate').prop('checked')){
-      var finalDate = 'indefinido';
+      finalDate = 'indefinido';
     } else{
-      var finalDate = $("#finalDate").val() + " " + $("#finalTime").val();
+      finalDate = $("#finalDate").val() + " " + $("#finalTime").val();
     }
 
     $("#consult").find("tr.item").each(function(){
@@ -414,29 +438,60 @@
       url:"/dashdata-search/",
       dataType: 'json',
       data:{
-        'expName': expID,
+        'expNames[]': expID,
         'minValue': minValue,
         'maxValue': maxValue,
         'initialDate': initialDate,
         'finalDate': finalDate,
+        'section': 1,
       },
       success: function (dataSearch) {
         var dateList = dataSearch.dateList;
         var valueList = dataSearch.valueList;
         var pkList = dataSearch.pkList;
+        var sections = dataSearch.sections;
 
         for(var i=0; i < valueList.length; i++){
             addOneField(dateList[i], valueList[i], pkList[i]);
-            /*
-          if(i >= 50*section && i < (50)*(section+1)){
-            addOneField(dateList[i], valueList[i], pkList[i]);
-          }*/
-        }
+          }
+        $('#pagination-demo').load(location.href + " #pagination-demo");
+        paginationLoad(sections);
       }
     });
 
 
   });
+
+  function paginationSearch(section){
+
+      $("#consult").find("tr.item").each(function(){
+        $(this).remove();
+      });
+
+      $.ajax({
+        type:"GET",
+        url:"/dashdata-search/",
+        dataType: 'json',
+        data:{
+          'expNames[]': expID,
+          'minValue': minValue,
+          'maxValue': maxValue,
+          'initialDate': initialDate,
+          'finalDate': finalDate,
+          'section': section,
+        },
+        success: function (dataSearch) {
+          var dateList = dataSearch.dateList;
+          var valueList = dataSearch.valueList;
+          var pkList = dataSearch.pkList;
+
+          for(var i=0; i < valueList.length; i++){
+              addOneField(dateList[i], valueList[i], pkList[i]);
+          }
+        }
+      });
+
+  }
 
 
   function chkDeletefunction(variable){
@@ -486,8 +541,6 @@
   $(".chkDelete").change(function(){
     chkDeletefunction($(this));
   });
-
-
 
   $("#selectAllconsult").change(function(){
 
@@ -578,21 +631,28 @@
         }
 
       });
-
     }
-
   });
 
-  $('#pagination-demo').twbsPagination({
-          totalPages: 16,
-          visiblePages: 6,
-          next: 'Next',
-          prev: 'Prev',
-          onPageClick: function (event, page) {
-              //fetch content and render here
-              $('#page-content').text('Page ' + page) + ' content here';
-          }
-      });
+  function paginationLoad(sections){
+    $('#pagination-demo').twbsPagination({
+            totalPages: sections,
+            visiblePages: 3,
+            next: '>',
+            prev: '<',
+            first:'<<',
+            last: '>>',
+            onPageClick: function (event, page) {
+                //fetch content and render here
+                $('#page-content').text('Page ' + page) + ' content here';
+                paginationSearch(page);
+            }
+        });
+  }
+
+  paginationLoad('{{sections}}');
+
+
 
 
 </script>

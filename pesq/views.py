@@ -18,7 +18,6 @@ import math
 from operator import attrgetter
 from django.utils import timezone
 
-
 # Get the JWT settings, add these lines after the import/from lines
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -366,7 +365,7 @@ class DashDataSearch(TemplateView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
-        expName = request.GET['expName']
+        expNames = request.GET.getlist('expNames[]')
 
         initialDate = request.GET['initialDate']
         finalDate = request.GET['finalDate']
@@ -374,11 +373,22 @@ class DashDataSearch(TemplateView):
         maxValue = request.GET['maxValue']
         minValue = request.GET['minValue']
 
+        section = int(request.GET['section'])
+
+        lowerLim = (section - 1)*50
+        upperLim = section * 50
+
         usuario = request.user.profile
         pk = usuario.pk
 
-        experimento = Experimento.objects.filter(pesquisador=pk, name=expName).first()
-        dashList = DashData.objects.filter(experimento=experimento)
+        dashList = DashData.objects.none()
+
+        for expname in expNames:
+            exp = Experimento.objects.filter(pesquisador=pk, name=expname).first()
+            newDashList = DashData.objects.filter(experimento=exp)
+            dashList = dashList | newDashList
+
+        dashList = dashList.order_by('data').reverse()
 
         if not initialDate=='indefinido':
             dashList = dashList.filter(data__gte=initialDate)
@@ -389,6 +399,9 @@ class DashDataSearch(TemplateView):
         if not maxValue=='indefinido':
             dashList = dashList.filter(dado__lte=maxValue)
 
+
+        sections = math.ceil(dashList.count()/50)
+        dashList = dashList[lowerLim:upperLim]
 
         searchData = {
             'minValue' : minValue,
@@ -401,6 +414,8 @@ class DashDataSearch(TemplateView):
         valueList = []
         pkList = []
 
+
+
         for dash in dashList:
             dateList.append(dash.data)
             valueList.append(dash.dado)
@@ -409,6 +424,7 @@ class DashDataSearch(TemplateView):
         searchData['dateList'] = dateList
         searchData['valueList'] = valueList
         searchData['pkList'] = pkList
+        searchData['sections'] = sections
 
         return JsonResponse(searchData)
 
@@ -451,9 +467,10 @@ def dashboard_chart_data(request):
     usuario = request.user.profile
     pk = usuario.pk
 
-    dataExp = DashData.objects.all()[lowerLim:upperLim]
-    sections = range(1, 1+math.ceil(DashData.objects.all().count()/50))
     experimentos = Experimento.objects.filter(pesquisador=pk)
+    dataExp = DashData.objects.filter(experimento__in=experimentos)
+    sections =  math.ceil(dataExp.count()/50)
+    dataExp = dataExp[lowerLim:upperLim]
 
     return render(request, 'dash/dashboard_data.html', {'dataExp':dataExp, 'experimentos':experimentos, 'sections': sections} )
 
