@@ -5,7 +5,11 @@
 <div class="pesquisador">
 
   <div class="pesq-picture">
+    {%if usuario.foto %}
     <img src="{{ usuario.foto.url }}" alt="" height="300px"/>
+    {%else%}
+    <img src="/static/img/avatar.png" alt="profile-avatar" height="300px"s/>
+    {% endif %}
   </div>
 
   <div class="name-title"> {{ usuario.nome }} <span style="color: #55acee;">{{ usuario.graduacao }}, <b>{{ pesquisador.titulo }}</b></span></div>

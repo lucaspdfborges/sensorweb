@@ -11,11 +11,10 @@ html {
 
 html,
 body {
-  background-color: #fafeff; /* f1f5ff  fafeff*/
+  background-color: #fefefe; /* f1f5ff  fafeff*/
   font-family: "Arsenal", sans-serif;
   font-weight: lighter;
 }
-
 
 header{
   margin-top: -1em;

@@ -1,4 +1,9 @@
 {% extends 'pesq/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
 
 {% block content %}
 
@@ -7,17 +12,22 @@
 {% if form.errors %}
 <p style='text-align: center; color: lightsalmon;'>Dados de usuário e/ou senha incorretos. Tente novamente.</p>
 {% endif %}
+<div class="login-form">
 
 <form class="consult"  method="post" action="{% url 'login' %}">
   {% csrf_token %}
 
-  <label>Usuário</label>
-  {{ form.username }}
+  <div class="form-group" >
+    <label>Usuário</label>
+    {{ form.username }}
+  </div>
 
-  <label>Senha</label>
-  {{ form.password }}
+  <div class="form-group" >
+    <label>Senha</label>
+    {{ form.password }}
+  </div>
 
   <button type="submit">Login</button>
 </form>
-
+</div>
 {% endblock %}

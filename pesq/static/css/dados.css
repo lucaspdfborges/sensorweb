@@ -507,3 +507,14 @@ li.page-item.active a{
   text-decoration: none;
   color:rgba(28, 50, 80, 1);
 }
+
+
+/*
+Button content on the bottom of the table
+*/
+
+.bottom-commands{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

@@ -1,37 +1,48 @@
 {% extends 'pesq/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
 
 {% block content %}
 <h1>Perfil do Usuário</h1>
 
-<form class="consult" method="POST">
+<div class="profile-form">
+
+<form method="POST">
   {% csrf_token %}
 
-  <div id="nome">
+  <div class="form-group" id="nome">
     <label>Nome: </label>
     {{profile_form.nome}}
   </div>
 
-  <div id="foto">
-    <label>Foto: </label>
-    {{profile_form.foto}}
-  </div>
-
-  <div id="graduacao">
+  <div class="form-group" id="graduacao">
     <label>Título de graduação: </label>
     {{profile_form.graduacao}}
   </div>
 
-  <div id="titulo">
+  <div class="form-group" id="foto">
+    <label>Foto: </label>
+    {{profile_form.foto}}
+  </div>
+
+  <div class="form-group" id="titulo">
     <label>Título: </label>
     {{profile_form.titulo}}
   </div>
 
-  <div id="linhas">
+  <div class="form-group" id="linhas">
     <label>Linhas de pesquisa: </label>
     {{profile_form.pesquisas}}
   </div>
 
   <button type="submit">Salvar</button>
 </form>
+
+</div>
+
+
 
 {% endblock %}

@@ -84,8 +84,11 @@ def update_profile(request):
             return redirect('home')
     else:
         profile_form = ProfileForm(instance=request.user.profile)
+
+    usuario = request.user.profile
+    pk = usuario.pk
     return render(request, 'pesq/profile.html', {
-        'profile_form': profile_form
+        'profile_form': profile_form, 'usuario': usuario
     })
 
 class LoginView(generics.CreateAPIView):
@@ -427,15 +430,18 @@ class DashDataSearch(TemplateView):
 
         dateList = []
         valueList = []
+        sensorList = []
         pkList = []
 
         for dash in dashList:
             dateList.append(dash.data)
             valueList.append(dash.dado)
+            sensorList.append(dash.experimento.name)
             pkList.append(dash.pk)
 
         searchData['dateList'] = dateList
         searchData['valueList'] = valueList
+        searchData['sensorList'] = sensorList
         searchData['pkList'] = pkList
         searchData['sections'] = sections
 
@@ -514,6 +520,8 @@ def chart_data(request):
         maxValue = request.GET['maxValue']
         minValue = request.GET['minValue']
 
+        listXY = []
+
         for exp in experimentos:
 
             Exp = Experimento.objects.filter(pesquisador=pk, name=exp).first()
@@ -528,8 +536,6 @@ def chart_data(request):
                 dataset = dataset.filter(dado__gte=minValue)
             if not maxValue=='indefinido':
                 dataset = dataset.filter(dado__lte=maxValue)
-
-            listXY = []
 
             listExpXY = []
 

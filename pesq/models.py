@@ -89,7 +89,7 @@ class Profile(models.Model):
     graduacao = models.CharField(max_length=200, blank=True)
     titulo = models.CharField(max_length=1, choices=GRAD_CHOICES, blank=True)
     email = models.EmailField(blank=True)
-    foto = models.ImageField(upload_to='media', blank=True)
+    foto = models.ImageField(upload_to='media', default='/media/avatar.png', blank=True)
     pesquisas = models.ManyToManyField(Linhas)
 
     def __str__(self):

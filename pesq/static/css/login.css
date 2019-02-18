@@ -1,0 +1,40 @@
+.login-form{
+  margin: 0 auto;
+  display: table;
+  border: 1px solid #2f5f854d;
+  border-radius: 1em;
+}
+
+.form-group{
+    margin: 2em;
+}
+
+form label{
+  color: #2f5f85;
+  align-content: center;
+}
+
+form button{
+  margin: 0 auto;
+  background-color: #2f5f85;
+  color: white;
+  border-radius: 2em;
+  border: none;
+  height: 2em;
+  margin-left: 1em;
+  width: calc(100% - 2em);
+}
+
+form button:hover{
+  color: #ccc;
+}
+
+form button:active{
+  color: #55acee;
+}
+
+#id_username, #id_password{
+width: 100%;
+font-family: "Arsenal", sans-serif;
+font-weight: lighter;
+}
