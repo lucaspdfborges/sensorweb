@@ -41,7 +41,16 @@
   <button type="submit">Salvar</button>
 </form>
 
+<div class="errors">
+  {% if userForm.errors %}
+    <p>Erro ao cadastrar usuário:</p>
+  {% endif %}
+  {{profile_form.errors}}
 </div>
+
+</div>
+
+
 
 
 
