@@ -64,13 +64,16 @@ def linha_detail(request, pk):
     linha = Linhas.objects.get(pk=pk)
     return render(request, 'pesq/linha_detail.html', {'linha':linha})
 
-@login_required
 def usuario_cadastrar(request):
     if request.method == 'POST':
         userForm = CustomUserCreationForm(request.POST)
         if userForm.is_valid():
             user = userForm.save()
-            return redirect('home')
+            user = authenticate(username=userForm.cleaned_data['username'],
+                                    password=userForm.cleaned_data['password1'],
+                                    )
+            login(request, user)
+            return redirect('update_profile')
     else:
         userForm = CustomUserCreationForm()
     return render(request, 'pesq/signup.html', {'userForm': userForm})

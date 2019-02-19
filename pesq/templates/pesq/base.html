@@ -44,6 +44,7 @@
             <li class="profile-item" style="background-image: url('/static/img/profile.png');"><a href="/atualizar-usuario/" title="perfil"></a></li>
             {% else %}
             <li><a href="{% url 'login' %}" id="login">Login</a></li>
+            <li><a href="/cadastrar-usuario/" id="signup">SignUp</a></li>
             {% endif %}
           </div>
         </ul>
