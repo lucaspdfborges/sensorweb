@@ -18,7 +18,6 @@ urlpatterns = [
     path('dashdata-delete/',DashDataDelete.as_view(), name='dashdata-delete'),
     path('sensor_delete/', views.sensor_delete, name='sensor_delete'),
     path('sensor_update/', views.sensor_update, name='sensor_update'),
-    path('reset_pwd/', views.reset_pwd, name='reset_pwd'),
     path('dashdata-manual-insert/',DashDataManualInsert.as_view(), name='dashdata-manual-insert'),
     path('dashdata-search/',DashDataSearch.as_view(), name='dashdata-search'),
     path('dashdata-download/',views.dashdata_download, name='dashdata-download'),

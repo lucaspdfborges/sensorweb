@@ -20,6 +20,7 @@ import datetime
 from operator import attrgetter
 from django.utils import timezone
 
+
 # Get the JWT settings, add these lines after the import/from lines
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -82,7 +83,7 @@ def usuario_cadastrar(request):
 def reset_pwd(request):
     if request.method == 'POST':
         email = request.POST['email']
-        if Profile.objects.filter(user__email = 'lucaspdfborges@gmail.com').exists():
+        if Profile.objects.filter(user__email = email).exists():
             sendMail(email)
             messages.success(request, 'E-mail enviado com sucesso! \n Verifique sua caixa de entrada do email')
             return render(request, 'registration/login.html')
@@ -746,8 +747,6 @@ def dashboard_data_amount(request):
                     'data': listXY
                   }]
                 }
-
-
 
         return JsonResponse(data)
 

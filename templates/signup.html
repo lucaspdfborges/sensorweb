@@ -1,0 +1,38 @@
+{% extends 'pesq/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Registrar</h1>
+<div class="login-form">
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="form-group" >
+      <label>E-mail</label>
+      {{ form.username }}
+      <span>Máximo de 150 caracteres com letras, números e @/./+/-/_ . </span>
+    </div>
+
+    <div class="form-group" >
+      <label>Senha</label>
+      {{ form.password1 }}
+      <span>Senha não deve ter pelo menos 8 caracteres </span><br>
+      <span>Senha não pode ser inteiramente numérica </span><br>
+      <span>Senha não pode ser similar à informação pessoal </span>
+    </div>
+
+    <div class="form-group" >
+      <label>Confirmação de senha</label>
+      {{ form.password2 }}
+      <span>Repetir senha anteriormente digitada </span>
+    </div>
+
+    <button type="submit">Enviar</button>
+  </form>
+</div>
+
+{% endblock %}
