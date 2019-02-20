@@ -38,3 +38,30 @@ width: 100%;
 font-family: "Arsenal", sans-serif;
 font-weight: lighter;
 }
+
+.pwd-forgot{
+  color: #777;
+  padding-top: 0.5em;
+  font-size: 0.9em;
+  margin: 0 auto;
+  display: table;
+  text-decoration: none;
+}
+
+input{
+  width: 100%;
+}
+
+.span-comment{
+  margin: 0 auto;
+  text-align: center;
+  color: #777;
+  padding-bottom: 2em;
+}
+
+.div-messages{
+  padding-top: 1em;
+  margin: 0 auto;
+  color: #d5754f;
+  display: table;
+}

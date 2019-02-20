@@ -4,6 +4,7 @@ from .forms import  LinhaForm, CustomUserCreationForm, CustomUserChangeForm, Pro
 from .serializers import DashDataSerializer
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from django.contrib import messages
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from rest_framework import generics
@@ -77,6 +78,18 @@ def usuario_cadastrar(request):
     else:
         userForm = CustomUserCreationForm()
     return render(request, 'pesq/signup.html', {'userForm': userForm})
+
+def reset_pwd(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        if Profile.objects.filter(user__email = 'lucaspdfborges@gmail.com').exists():
+            sendMail(email)
+            messages.success(request, 'E-mail enviado com sucesso! \n Verifique sua caixa de entrada do email')
+            return render(request, 'registration/login.html')
+        else:
+            messages.warning(request, 'Erro : e-mail não cadastrado.')
+            return render(request, 'pesq/reset_pwd.html')
+    return render(request, 'pesq/reset_pwd.html')
 
 @login_required
 def update_profile(request):
