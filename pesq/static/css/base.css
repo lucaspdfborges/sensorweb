@@ -70,6 +70,92 @@ li {
 }
 
 /*
+  MENU GEAR
+*/
+
+#gear{
+  font-size: 1.125em;
+  padding-top: 0.25em;
+}
+
+.nav label{
+  position:relative;
+  color: #55acee;
+  display:block;
+  font-size: 1.125em;
+  padding-top: 0.25em;
+  padding:0 18px 0 12px;
+  transition:background 0.3s;
+  height: 100%;
+  cursor:pointer;
+}
+
+.nav label:after{
+  content:"";
+  position:absolute;
+  display:block;
+  top:50%;
+  right:5px;
+  width:0;
+  height:0;
+  border-top:4px solid rgba(255,255,255,.5);
+  border-bottom:0 solid rgba(255,255,255,.5);
+  border-left:4px solid transparent;
+  border-right:4px solid transparent;
+  transition:border-bottom .1s, border-top .1s .1s;
+}
+
+li.gear:hover ~ label:after{
+  border-top:0 solid rgba(255,255,255,.5);
+  border-bottom:4px solid rgba(255,255,255,.5);
+  transition:border-top .1s, border-bottom .1s .1s;
+}
+
+/*show the second levele menu of the selected voice*/
+
+label#gear:hover {
+color: #2f5f85;
+}
+
+label#gear:hover ~ ul.submenu{
+  max-height:10em;
+  transition:max-height 0.5s ease-in;
+}
+
+.nav ul.submenu:hover{
+  max-height:10em;
+  transition:max-height 0.5s ease-in;
+}
+
+/*style for
+
+/*style for the second level menu*/
+.nav ul.submenu{
+  background-color: white;
+  display: block;
+  max-height:0;
+  padding:0;
+  border-radius: 0.125em;
+  overflow:hidden;
+  list-style-type:none;
+  box-shadow:1px 1px 2px rgba(0,0,0,.3);
+  transition:max-height 0.5s ease-out;
+  position:absolute;
+  margin-left: -3em;
+
+}
+
+.nav ul.submenu li{
+  float:none;
+  display: block;
+  color: #55acee;
+}
+
+.nav ul.submenu li:hover{
+  color: #2f5f85;
+}
+
+/*
   CORPO
 */
 
@@ -130,6 +216,8 @@ MENU
 }
 
 .nav a {
+  font-family: "Arsenal", sans-serif;
+  font-weight: lighter;
   display: inline-block;
   color: #55acee;
   padding: 2px 2em;

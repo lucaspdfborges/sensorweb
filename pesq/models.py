@@ -59,7 +59,6 @@ class DashData(models.Model):
     def __str__(self):
         return self.experimento.name
 
-
 class Paper(models.Model):
     pesquisador = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     data_publicacao = models.DateField()

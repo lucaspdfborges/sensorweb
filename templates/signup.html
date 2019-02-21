@@ -12,10 +12,17 @@
     {% csrf_token %}
 
     <div class="form-group" >
-      <label>E-mail</label>
+      <label>Username</label>
       {{ form.username }}
       <span>Máximo de 150 caracteres com letras, números e @/./+/-/_ . </span>
     </div>
+
+    <div class="form-group" >
+      <label>E-mail</label>
+      {{ form.email }}
+      <span>Máximo de 150 caracteres com letras, números e @/./+/-/_ . </span>
+    </div>
+
 
     <div class="form-group" >
       <label>Senha</label>

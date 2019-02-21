@@ -4,11 +4,18 @@
   border: 1px solid #2f5f854d;
   border-radius: 1em;
   margin-bottom: 2em;
+  width: 60vw;
 }
 
 .form-group{
     margin: 2em;
 }
+
+.form-group span{
+    font-size: 0.8em;
+    color: #777;
+}
+
 
 form label{
   color: #2f5f85;
@@ -33,26 +40,75 @@ form button:active{
   color: #55acee;
 }
 
-#id_nome, #id_foto, #id_graduacao{
-width: 100%;
-font-family: "Arsenal", sans-serif;
-font-weight: lighter;
+input{
+  font-family: "Arsenal", sans-serif;
+  font-weight: lighter;
 }
+
+input[type=text]{
+  width: 100%;
+}
+
 
 .errors{
   display: table;
   margin: 0 auto;
-  background-color: #e88351;
   font-size: 1em;
+  width: calc(40vw - 2em);
+  color: darkred;
   font-weight: bold;
-  color: white;
   border: 1px solid lightsalmon;
   border-radius: 0.5em;
-  margin: 0.5em;
-  width: calc(100% - 2em);;
+  padding: 1em;
 }
 
 li li{
-  color: #eee;
+  color: darkred;
   font-weight: lighter;
+}
+
+.div-span{
+  color: #777;
+  margin: 0 auto;
+  display: table;
+  margin-bottom: 2em;
+}
+
+.pwd-forgot {
+    color: #777;
+    padding-top: 0.5em;
+    font-size: 0.9em;
+    margin: 0 auto;
+    display: table;
+    text-decoration: none;
+}
+
+.success{
+  margin: 0 auto;
+  display: table;
+  border-radius: 0.5em;
+  color: #274334;
+  box-shadow: 1px 1px 5px rgba(50,50,50,0.3);
+  padding: 2em;
+  background-color: #d0e4da;
+}
+
+.warning{
+  margin: 0 auto;
+  display: table;
+  border-radius: 0.5em;
+  color: #274334;
+  box-shadow: 1px 1px 5px rgba(50,50,50,0.3);
+  padding: 2em;
+  background-color: #d0e4da;
+}
+
+.failure{
+  margin: 0 auto;
+  display: table;
+  border-radius: 0.5em;
+  color: #671717;
+  box-shadow: 1px 1px 5px rgba(50,50,50,0.3);
+  padding: 2em;
+  background-color: #ebabab;
 }

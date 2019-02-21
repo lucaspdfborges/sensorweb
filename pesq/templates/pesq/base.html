@@ -41,7 +41,13 @@
             <li><a href="/linhas-de-pesquisa/">Linhas de Pesquisa</a></li>
             {% if user.is_authenticated%}
             <li><a href="{% url 'logout' %}" id="logout">Logout</a></li>
-            <li class="profile-item" style="background-image: url('/static/img/profile.png');"><a href="/atualizar-usuario/" title="perfil"></a></li>
+            <li class="gear">
+              <label id="gear" class="fa fa-gear" ></label>
+              <ul class="submenu">
+                <li><a href="/atualizar-usuario/"> <span class="fa fa-user"></span>Perfil</a></li>
+                <li><a href="{% url 'password_change' %}"> <span class="fa fa-key"></span>Senha</a></li>
+              </ul>
+            </li>
             {% else %}
             <li><a href="{% url 'login' %}" id="login">Login</a></li>
             <li><a href="{% url 'signup' %}" id="signup">SignUp</a></li>
