@@ -37,4 +37,6 @@ urlpatterns = [
     path('dashboard/inserir-dados/', views.dashboard_insert_data_page, name='dashboard_insert_data_page'),
     path('dashboard_stats/', views.dashboard_stats, name='dashboard_stats'),
     path('dashboard_update_data/', views.dashboard_update_data, name='dashboard_update_data'),
+    re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.activate, name='activate'),
 ]
